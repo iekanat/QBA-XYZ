@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1499217923921.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "1E5641F6",
+    "lastKnownWriteTime" : 80,
+    "last_content_update" : 1499217923921,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "905AACF1",
+        "caption" : "zillowRandom",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=zillowRandom&cache_key=905AACF1",
+        "displayedObservations" : 50,
+        "environment" : "",
+        "object" : "zillowRandom",
+        "preview" : 0,
+        "totalObservations" : 50,
+        "variables" : 12
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

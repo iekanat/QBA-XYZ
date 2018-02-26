@@ -1,0 +1,6 @@
+"0","qplot(x = disp, y = mpg, data = mtcars) +
+  geom_smooth(method = ""lm"", se = FALSE) + # Fit regression line
+  # add guide lines
+  geom_hline(yintercept = 15, lty = 2) + geom_abline(xintercept = 350, lty = 2)
+"
+"2","Ignoring unknown parameters: xintercept"

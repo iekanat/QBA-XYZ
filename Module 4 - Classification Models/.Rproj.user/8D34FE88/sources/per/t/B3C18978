@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1518052655454.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "B3C18978",
+    "lastKnownWriteTime" : 0,
+    "last_content_update" : 1518052655454,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "53D57A3C",
+        "caption" : "games",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=games&cache_key=53D57A3C",
+        "displayedObservations" : 358,
+        "environment" : "",
+        "object" : "games",
+        "preview" : 0,
+        "totalObservations" : 358,
+        "variables" : 9
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

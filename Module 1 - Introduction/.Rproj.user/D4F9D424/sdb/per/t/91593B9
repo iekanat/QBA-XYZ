@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "---\ntitle: \"Module 1 - Introduction to Statistical Computing Environment\"\nauthor: \"Irfan Kanat\"\ndate: \"06/26/2017\"\noutput:\n  pdf_document: default\n  html_document: default\ngeometry: margin=1in\nurlcolor: blue\n---\n\nWelcome to QBAXXX, Module 1. \n\nThis module is mainly going to be an introduction to tools we will be using through out the course. We will make a running start to the semester and it may feel a bit confusing at times, that is on purpose. There will be certain things you won't know from the start. Unless they prevent you from progressing, note them down and keep progressing. Most of it will become clear as you work through it. For the questions that you still are unclear about in the end, you can ask me during our virtual office hours.\n\nThis module is made up of 6 learning activitites listed below.\n\n##Learning Activities\n\n1 - Installation [PDF](1_Install.pdf), [HTML](1_Install.html), [Video]() : Instructions to install R and R Studio. \n\n2 - Reporting and Documentation [PDF](2_Reporting.Rmd), [HTML](2_Reporting.html), [Rmd](2_Reporting.Rmd), [Video]() : Explanation of the use of R Markdown for Reporting.\n\n3 - Introduction to R Console [PDF](3_Introduction.pdf), [HTML](3_Introduction.html), [Rmd](3_Introduction.Rmd), [Video]() : Brief intro to basic functionality of R Console.\n\n4 - Introduction to R Packages [PDF](4_Packages.pdf), [HTML](4_Packages.html), [Rmd](4_Packages.Rmd), [Video]() : Introduction to Packages and Package Management in R.\n\n5 - Importing Data [PDF](5_Import.pdf), [HTML](5_Import.html), [Rmd](5_Import.Rmd), [Video](), [data 1](country.csv), [data 2](country.xlsx): Discussion of data import functionality.\n\n6 - Useful Sources [PDF](6_Resources.pdf), [HTML](6_Resources.html), [Video](): Pointers on where to go for more information.\n\n\n[Download Zip Archive for This Module's Learning Activities](Week_1.zip)\n\n##Evaluation\n\n[Assignment 1](Assignment_1.Rmd)\n",
+    "created" : 1499280797108.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4029773872",
+    "id" : "91593B9",
+    "lastKnownWriteTime" : 1499280756,
+    "last_content_update" : 1499280756,
+    "path" : "~/Dropbox/QBAXXXX/R Content/Module 1 - Introduction/0_Module_1.md",
+    "project_path" : "0_Module_1.md",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "markdown"
+}

@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1499216254246.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "810355CC",
+    "lastKnownWriteTime" : 7022344664202944562,
+    "last_content_update" : 1499216254246,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "9634C235",
+        "caption" : "zillowState",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=zillowState&cache_key=9634C235",
+        "displayedObservations" : "51",
+        "environment" : "",
+        "object" : "zillowState",
+        "preview" : "0",
+        "totalObservations" : "51",
+        "variables" : "7"
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

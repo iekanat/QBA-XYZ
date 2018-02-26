@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1499223310875.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "37F9F42",
+    "lastKnownWriteTime" : 80,
+    "last_content_update" : 1499223310875,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "E0EE14DC",
+        "caption" : "itInfrastructure",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=itInfrastructure&cache_key=E0EE14DC",
+        "displayedObservations" : "434",
+        "environment" : "",
+        "object" : "itInfrastructure",
+        "preview" : "0",
+        "totalObservations" : "434",
+        "variables" : "6"
+    },
+    "relative_order" : 15,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

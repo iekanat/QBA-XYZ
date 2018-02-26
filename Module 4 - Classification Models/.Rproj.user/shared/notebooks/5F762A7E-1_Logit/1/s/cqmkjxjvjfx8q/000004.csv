@@ -1,0 +1,7 @@
+"0","# Or use the plot function to plot the curve
+#plot(mtcars_am_roc)
+# Ggplot with plotROC package does a better job.
+ggplot(mtcars, aes(d=am, m=prob))+ geom_roc() + style_roc()
+"
+"2","Error in FUN(X[[i]], ...) : object 'prob' not found
+"

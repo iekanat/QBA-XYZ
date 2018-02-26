@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "---\ntitle: \"Module 4 - Categorical Modelling\"\nauthor: \"Irfan Kanat\"\ndate: \"07/03/2017\"\noutput:\n  pdf_document: default\n  html_document: default\ngeometry: margin=1in\nurlcolor: blue\n---\n\nWelcome to QBAXXX, Module 4. \n\nIn the previous modules we learned the linear regression in R. In this module we will pick up where we left off in module 3 and learn how to fit various models for categorical dependent variables. \n\nThis module we will build upon some functionality we learned in Module 3 so it may be a good idea to refresh your memory.\n\nThere will be certain things you won't know from the start. Unless they prevent you from progressing, note them down and keep progressing. Most of it will become clear as you work through it. For the questions that you still are unclear about in the end, you can ask me during our virtual office hours.\n\nThis module's module is made up of X learning activitites listed below. **BEFORE YOU START THE FOLLOWING ACTIVITIES, CREATE A PROJECT FOLDER FOR THIS MODULE AS DESCRIBED IN FIRST MODULE'S INTRODUCTION LEARNING ACTIVITY**.\n\n##Learning Activities\n\n1 - Logistic Regression / Multinomial Regression [PDF](.pdf), [HTMl](.html), [Rmd](.Rmd), [Video]():\n\n2 - Regression Trees [PDF](.pdf), [HTMl](.html), [Rmd](.Rmd), [Video]():\n\n3 - Support Vector Machines [PDF](.pdf), [HTMl](.html), [Rmd](.Rmd), [Video]():\n\n\n[Download Zip Archive for This Module's Learning Activities](Module_3.zip)\n\n##Evaluation\n\n[Assignment 3](Assignment_3.Rmd)\n",
+    "created" : 1518023704769.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "382281098",
+    "id" : "16880B05",
+    "lastKnownWriteTime" : 1505525921,
+    "last_content_update" : 1505525921,
+    "path" : "~/Dropbox/QBAXXXX/R Content/Module 4 - Classification Models/0_Module_4.md",
+    "project_path" : "0_Module_4.md",
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "markdown"
+}

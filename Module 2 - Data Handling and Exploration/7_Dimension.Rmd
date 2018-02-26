@@ -1,0 +1,14 @@
+---
+title: "Dimension Reduction"
+author: "Irfan Kanat"
+date: "July 5, 2017"
+output:
+  html_document: default
+  pdf_document: default
+geometry: margin=1in
+urlcolor: blue
+---
+
+In this learning activity we will learn about Dimension Reduction using Principal Component Analysis. Dimension reduction is what you do when you have too many variables and you can not make up your mind about which ones are worthless :) .
+
+# COMING SOON

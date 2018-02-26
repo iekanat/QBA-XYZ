@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1518057805056.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4227342657",
+    "id" : "44210D9D",
+    "lastKnownWriteTime" : 1518057809,
+    "last_content_update" : 1518057809592,
+    "path" : "~/Dropbox/QBAXXXX/R Content/Module 4 - Classification Models/1_Logit.Rmd",
+    "project_path" : "1_Logit.Rmd",
+    "properties" : {
+        "cursorPosition" : "370,113",
+        "last_setup_crc32" : "9D57E41E7e9766ab",
+        "scrollLine" : "362"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

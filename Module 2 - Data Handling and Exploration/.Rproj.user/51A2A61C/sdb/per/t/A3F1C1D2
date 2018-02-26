@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1499212799771.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "A3F1C1D2",
+    "lastKnownWriteTime" : 42949672970,
+    "last_content_update" : 1499212799771,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "637303F4",
+        "caption" : "zillowOHCheap",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=zillowOHCheap&cache_key=637303F4",
+        "displayedObservations" : 305,
+        "environment" : "",
+        "object" : "zillowOHCheap",
+        "preview" : 0,
+        "totalObservations" : 305,
+        "variables" : 12
+    },
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

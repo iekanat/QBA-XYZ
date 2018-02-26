@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1518465222925.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "DC577E42",
+    "lastKnownWriteTime" : 1503944253,
+    "last_content_update" : 1518465222925,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "11CE1EA3",
+        "caption" : "admitData",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=admitData&cache_key=11CE1EA3",
+        "displayedObservations" : 400,
+        "environment" : "",
+        "object" : "admitData",
+        "preview" : 0,
+        "totalObservations" : 400,
+        "variables" : 4
+    },
+    "relative_order" : 11,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

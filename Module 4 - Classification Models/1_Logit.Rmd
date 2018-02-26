@@ -1,0 +1,428 @@
+---
+title: "Logistic and Multinomial Regression"
+author: "Irfan Kanat"
+date: "September 15, 2017"
+output:
+  html_document: default
+  pdf_document: default
+geometry: margin=1in
+urlcolor: blue
+---
+
+Quick note before we start. This is the first module we use the caret package. The package itself is quite large. So I recommend you install it before you do anything else.
+
+```{r setup, include=F}
+data(mtcars)
+library(ggplot2)
+library(gridExtra)
+library(caret)
+library(pROC)
+library(plotROC)
+library(mlogit)
+```
+
+In the previous module we learned about regression, with a continuous dependent variable. In this learning activity we will extend the regression to categorical variables[^1]. We will start with case of binary variables, and expand upon it.
+
+[^1]: A categorical variable is one that takes discrete levels. Gender, Eye Color, Transmission Type (automatic = 0 or manual = 1), or Neighborhood can be considered categorical. We call categorical variables with only two levels as binary variables. Transmission type or pyhsiological gender can be considered binary.
+
+# What is the Big Idea?
+
+Let us start with a brief discussion of why we can not simply fit an OLS regression to these variables[^2]. 
+
+[^2]: In fact, we can fit OLS to binary variables, these models are called continuous probability models but their use is not very common.
+
+Let us assume a binary variable such as gender. The variable can take two levels: male or female. If you compare this to the continuous variables we used in OLS, you will quickly realize that things are a bit different. Let us look at how binary variables look compared to continuous variables.
+
+I will use the now familiar mtcars dataset. We have used this dataset since the first module, so you should recognize it. I am plotting the type of transmission (Automatic/Manual) and miles per galon. The transmission type is binary. 
+
+```{r}
+plotContinuous <- qplot(x = seq_along(mpg), y = mpg, data = mtcars) + ggtitle("Continous")
+plotBinary <- qplot(x = seq_along(am), y = am, data = mtcars) + ggtitle("Binary")
+grid.arrange(plotBinary, plotContinuous, ncol=1)
+```
+
+Despite the difference in the scale of the variables, it is clear that there is a lot more levels a continuous variable can take.
+
+The problem is evident in the distribution of binary variable. First, a binary variable is restricted to two levels. When you try to use OLS, you will start violating several assumptions. The regression can produce values greater than 1 and smaller than 0. Second, often times the linearity assumption of OLS is too restrictive in binary dependent variables. Third, OLS assumes error term is normally distributed. With a Binary dependent variable that is hard to satisfy. Finally, OLS assumes homoskedasticty (constant variance) in error terms. Again, this assumption is near impossible to satisfy with a binary variable.
+
+We need to find a way to model the relationship between dependent variable and independent variables without getting caught up with all the above restrictions.
+
+# Logistic Regression
+
+So the problem is that the dependent variable is bounded and relation between dependent variable and independent variable may be non-linear. One solution is quite simple. Run your OLS and then carry out a non-linear transformation on the results to conform to the boundaries. This is referred to as a link function. The most popular link function for binary variables is the logit transformation. 
+
+Logistic regression is the name given to a regression with logit link function?
+
+## How Does Logit Fit in Logistic Regression
+
+With binary dependent variables, what we do is model the probability of membership in a category. This is sensible as the probability ranges from 0-1 in a continuous fashion, whereas the dependent variable is discrete (0 or 1).
+
+We can use OLS to estimate the probability, and then transform this estimate to conform to restrictions listed above. The formula for logistic regression is given below:
+
+$log( \frac{p}{1-p} ) = \beta_0 + \beta_1 \times X_1 + \beta_2 \times X_2$
+
+With two little changes to OLS formulation, we have the logit regression: (1) on the left hand side we have the link function applied to probabilities, (2) there is no error term (probability incorporates error).
+
+## How Does it Look
+
+A simplified example with one independent variable (mpg) provides a visual key into what we described above. Compare the blue line below to what an OLS would have provided (red). That is the S shape the logit is famous for. It conforms to the bounds and non-linearity we discussed above.
+
+```{r}
+ggplot(mtcars, aes(x = mpg, y = am)) + 
+    geom_smooth(method="glm", method.args = list(family="binomial"), se=FALSE, color="blue")+
+    geom_smooth(method="lm", se=F,  color="red") +
+# Bonus: rename the y axis label
+		ylab('Probability of Manual Transmission')
+```
+
+
+## What is This About Odds, Log Odds and Probabilities?
+
+When you are dealing with logit, you will quickly become familiar with odds, log odds and probabilities. Let me provide a quick overview.
+
+The probability is restricted between 0 and 1... For example, a ten sided die (d10) has 60% to produce a number smaller than or equal to six.
+
+The odds do not have an upper limit and they are non-linear. The odds of obtaining a number smaller than or equal to six on a d10 is 1.5 (p/(1-p) = .6 / .4).
+
+When you take natural logarithm of odds (logit), the lower limit is removed. The log odds of obtaining a number smaller than or equal to six on a d10 is .4 (log(1.5)).
+
+Here is a table to show you how these things work.
+
+```{r}
+# For a sequence of probabilites from .1 to .9
+p <- seq(.1, .9, by = .1)
+# Calculate the Odds
+odds <- p/(1-p)
+# Calculate the log odds (logit)
+lnOdds <- log(odds)
+# Present results
+data.frame(cbind(p, odds, lnOdds))
+```
+
+Note that for probability of .5 the odds are 1 and the log odds are 0.
+
+Inspecting the table, you can see that this type of transformation takes care of boundaries (0 and 1) and linearity. With this transformation, we no longer have to worry about violating the OLS assumptions.
+
+Still, we may need to transform logit results to things more understandable to human beings.
+
+To obtain odds from logit, we exponentiate (reversing the log) both sides.
+
+$\frac{p}{1-p} = e^{\beta_0 + \beta_1 \times X_1 + \beta_2 \times X_2}$
+
+From odd's we can move onto probabilities like so:
+
+$p = \frac{1}{1+e^{\beta_0 + \beta_1 \times X_1 + \beta_2 \times X_2}}$
+
+Here is a simple exercise for you. Probability of landing a critical hit (rolling a 20 on a 20 sided die) is 5%. Calculate the odds and log odds of critical hit.
+
+How about the probability and odds of getting hit by a fireball, if the log odds are .5?
+
+
+## What is the Catch?
+
+Nothing in life is free... Once you use a link function, the $\beta$ coefficients are no longer as easy to interpret. We will see how this translate into interpretation of coefficients later on.
+
+# Logit in R
+
+We have gone through quite a dry description on why we have logit regression. Let us go over an example to see how all the above discussion fits into practice.
+
+## Fit a Logit Model
+
+Let us fit a logit model to predict transmission type of cars in mtcars dataset.
+
+We use glm() to fit these kinds of **g**eneralized **l**inear **m**odels. Please skim the manual page for glm (?glm) before virtual office hours.
+
+```{r}
+mtcars_lgt_0 <- glm(am ~ mpg + vs , mtcars, family = "binomial")
+```
+
+Let us see what we have done thus far:
+
+1. mtcars_lgt_0 <-: assigns the estimation results into a variable named mtcars_lgt_0.
+2. glm(am ~ mpg + vs, mtcars, family = "binomial"): calls lm function with three parameters
+    + am ~ mpg + vs : is the formula specification, left of ~ is the dependent variable, and right of ~ is the independent variables.
+      - Since am = 1 when car is manual, we model the car having a manual transmission.
+    + data = mtcars: name of the dataset to draw the variables from ("data =" ommitted). 
+    + family = "binomial": Tells R to use logit link function
+
+## Evaluate Results
+
+Let us view the results of estimation.
+
+```{r}
+summary(mtcars_lgt_0)
+```
+
+As with OLS, the output states what the function call was. This is very useful if you somehow lost the code you used to create estimation.
+
+Then comes the deviance residuals. This is an overview of model fit. Do not worry about these, as we will discuss about model fit below.
+
+Coefficients is what most people would be interested in. It shows the estimates for coefficients, we can see miles per galon is a statistically significant predictor of transmission type. The estimate reported here is the effect on log odds.
+
+Below this all is the fit indices.
+
+### Evaluate Model Fit
+
+AIC: Among the values reported, the easiest to interpret is AIC. Aikaike's Information Criterion reports the model fit, lower the value, better the fit. It is useful to compare to models fit to the same dataset (not necessarily nested). It's usefulness however is limited to model comparison.
+
+Log Likelihood Test: If you want to make sure the model is actually good, one way is to compare it to a null model (nothing on the right hand side). We can use the null deviance and residual deviance for this purpose. We will compare the fit of our model to see if the model is an improvement over a null model. We will use a chi squared ($\chi^2$) test for this comparison.
+
+If you inspect the summary output, below the coefficients, you will see some deviances reported. We can run a chi square test these values. You will note that the null deviance is `r mtcars_lgt_0$null.deviance` with `r mtcars_lgt_0$df.null` degrees of freedom. The residual deviance of our model on the other hand is `r mtcars_lgt_0$deviance` with `r mtcars_lgt_0$df.residual` degrees of freedom. For chi squared ($\chi^2$) test we will use the difference in deviance with the difference in degrees of freedom. This will tell us if the model is a significant improvement over a null model.
+
+Looking at the results the values are: deviance = `r mtcars_lgt_0$null.deviance` - `r mtcars_lgt_0$deviance` = `r (mtcars_lgt_0$null.deviance - mtcars_lgt_0$deviance)` with df = `r mtcars_lgt_0$df.null` - `r mtcars_lgt_0$df.residual` = `r mtcars_lgt_0$df.null - mtcars_lgt_0$df.residual`. We can then estimate the significance by 
+pchisq(`r (mtcars_lgt_0$null.deviance - mtcars_lgt_0$deviance)`, `r mtcars_lgt_0$df.null - mtcars_lgt_0$df.residual`, lower.tail = F)
+
+```{r}
+# Instead of manually calculating the values, we can also ask R to do it for us
+pchisq(mtcars_lgt_0$null.deviance - mtcars_lgt_0$deviance, 
+       mtcars_lgt_0$df.null - mtcars_lgt_0$df.residual,
+       lower.tail = F)
+```
+
+P value smaller than .05 means the model is statistically significantly better than null model.
+
+### Evaluate Coefficients
+
+The beta coefficients R reports are the effect on log odds. These do not have an intuitive interpretation. Best we can say is that each additional mile per galon increases the logged odds of the car being a manual by `r round(mtcars_lgt_0$coefficients[2], digits=2)`.
+
+If you want odds-ratios, you will need to exponentiate the coefficients. Let us compare raw coefficients with odds-ratios:
+
+```{r}
+mtcars_lgt_0$coefficients
+# Exponentiate the coefficients
+exp(mtcars_lgt_0$coefficients)
+```
+
+The interpretation of odds-ratios are more straightforward. For one unit increase in mpg, odds of being a manual transmission increase by a ***factor*** of `r round(exp(mtcars_lgt_0$coefficients[2]), digits=2)`.
+
+Since vs is insignificant, we should not interpret it. If it were significant, we would interpret it like any other binary independent variable, but the coefficient would be multiplicative in odds-ratio.
+
+While the output has the intercept, it is not meaningful to interpret.
+
+### Model Performance in Prediction
+
+Logit model is also used for predictions. How do we go from what we have done so far to predicting the outcome? 
+
+We can obtain predicted probabilities from the model with predict function.
+
+```{r}
+# Type parameter specifies probability
+predict(mtcars_lgt_0, type="response")
+```
+
+If we know nothing more about the data we can use .5 as a cut-off and say any car that has a predicted probability greater than .6 is a manual. **If we knew the prevalence of manual transmission, we can make a more informed decision.** If the sample we have is representative of the population, then we can use the prevalence of manual transmission in cars as an indicator.
+
+```{r}
+mean(mtcars$am)
+```
+
+We know that roughly `r round(mean(mtcars$am), digits=2)` of cars are manual. That means only 40 percent of our predictions should result in a positive prediction. That means we should set our cut-off at .6 (1-.4).
+
+Let us add two variables to the data.frame and go from there.
+
+```{r}
+# Save predicted probabilities
+mtcars$prob <- predict(mtcars_lgt_0, type = "response")
+# Create a variable for predicted transmission type
+mtcars$predAM <- 0
+# Filter the cars with predicted probabilities greater than .6
+# and change their prediction to manual.
+mtcars[mtcars$prob > .6, 'predAM'] <- 1
+```
+
+Now we can compare what we predicted to what was actually observed.
+
+```{r}
+mtcars[,c("predAM", "am")]
+```
+
+If the model was perfect, the two columns would match perfectly. Realistically, we can not go through every line and compare the results... There needs to be a better way to find out model performance.
+
+#### Confusion Matrix
+
+One way to learn about model's predictive performance is a confusion matrix. Easiest way to obtain a confusion matrix is to tabulate predicted and actual category membership data.
+
+```{r}
+table(mtcars[, c("predAM", "am")])
+```
+
+There are four cells here:
+
+True Positives: We predicted 1, and the actual value was 1.
+True Negatives: We predicted 0, and the actual value was 0.
+False Positives: We predicted 1, when the actual value was 0.
+False Negatives: We predicted 0, when the actual value was 1.
+
+From these information we can calculate various metrics of performance. I am listing the commonly used ones below.
+
+
+Prevalence: What is the prevalence of positives in sample? ((TP+FN)/Total) 
+
+Accuracy: How often were we able to predict correctly? ((TP+TN)/Total) 
+
+Specificity: How good is our model at predicting negatives? (TN/(TN+FP))
+
+Sensitivity: How good is our model at predicting positives? (TP/(TP+FN)) 
+
+Positive Prediction Rate: How good is our model in predicting positives, taking into account prevalence. $(sensitivity \times prevalence) / ((sensitivity \times prevalence) + ((1-specificity) \times (1-prevalence)))$
+
+Negative Prediction rate: How good is our model in predicting negatives, taking into account prevalence. $(specificity \times prevalence) / ((specificity \times prevalence) + ((1-specificity) \times (1-prevalence)))$
+
+Kappa: How well the classifier performed compared to random prediction.
+
+Read the confusionMatrix manual for more on these measures.
+
+```{r}
+# Here we use confusionMatrix function from caret package
+confusionMatrix(table(mtcars[,c("predAM", "am")]))
+```
+
+#### Receiver Operating Characteristics (ROC) Curve
+
+Another way to evaluate model performance is to look at the ROC curve. It shows the sensitivity/specificity as a function of the cut off value.
+
+```{r}
+# Calculate the ROC curve
+mtcars_am_roc <- roc(am~prob, mtcars) 
+# You can call the calculation to see the area under curve
+mtcars_am_roc
+# Or use the plot function to plot the curve
+#plot(mtcars_am_roc)
+# Ggplot with plotROC package does a better job.
+ggplot(mtcars, aes(d=am, m=prob))+ geom_roc() + style_roc()
+```
+
+Looking at the curve, the ideal ROC curve would look like a right angle. Where Specificity is equal to 1 and sensitivity (1-false positive rate) is equal to 1. In which case the area under the curve would equal 1. 
+
+The worst case scenario is both sensitivity and specificity being equal to 0. In which case the area under the curve will be equal to 0.
+
+Generally speaking, if the area under the curve is less than .6 then the model is not good.
+
+# Multinomial Logit
+
+What if you have more than two categories? If you want to stick to regression models, what you need if you have multiple categories is to use Multinomial Logit. Multinomial logit is sometimes also referred to as softmax in more machine learning oriented circles.
+
+## Dataset
+
+The dataset we will use comes from an online gaming platform:
+
+```{r}
+# Read in csv file
+games <- read.csv("data/games.csv") 
+# Inspect Structure of the variables
+str(games)
+# Inspect descriptives
+summary(games)
+```
+
+
+appID: Unique identifier for the game.
+dateM: Observation date (201601 in this set)
+status: Three level categorical variable indicating game's popularity.
+avgMin: Average number of minutes players played this game
+listPrice: List price.
+reviews: Positive reviews for the game.
+multi: Binary variable indicating multiplayer features.
+
+## Estimate The Model
+
+R offers many alternatives in estimating multinomial logit models. I prefer mlogit package in my day to day use, while it is an overkill for simple multinomial logit models it also comes with nifty features (like reporting p values).
+
+You will notice the overkill aspect of mlogit package in the function call. Don't worry too much about parameters that are not immediately apparent.
+
+```{r}
+games_mlgt_0 <- mlogit(status ~ 0 | avgMin + multi, data = games, choice = "status", shape = "wide")
+```
+
+Let us break down the function call here:
+
+    games_mlgt_0 <- mlogit(status ~ 0 | avgMin + multi, data = games, choice = "status", shape = "wide")
+
+1. games_mlgt_0 <- : store the estimation results in a variable called games_mglt_0
+2. mlogit(status ~ 0 | avgMin + multi, data = games, choice = "status", shape = "wide")
+    + status ~ 0 | avgMin + multi : formula saying estimate *status* based on *avgMin* and *multi*. The 0 | specifies that there are no alternative specific variables (don't worry).
+    + data = games : where to find the variables.
+    + choice = "status", shape = "wide": Telling mlogit package about data structure.
+
+The function call is complicated due to the nature of mlogit. This package is designed for estimating a broad range of multinomial logit models (e.g. mixed multinomial logit) therefore the formula specification and data structure are overly complicated. I would not worry about these unless you are planning to use this model anytime soon.
+
+## Evaluate Results
+    
+Let's take a look at the results.
+
+```{r}
+summary(games_mlgt_0)
+```
+
+### Evaluate Model Fit
+
+What you learned about evaluating model fit thus far holds here. One nice thing about mlogit package is that it reports most statistics you will need to evaluate model fit automatically.
+
+Here we see the LR test results are statistically significant (p value < .05). This means model is a significant improvement over null model.
+
+We can not calculate regular $R^2$ for these types of models but there exists pseudo $R^2$ metrics. McFadden's $R^2$ shows how much of the variance is explained by the model.
+
+### Evaluate Coefficients
+
+If you recall that our dependent variable had three levels (niche, popular, superstar) you will note that coefficients are reported only for two of them (popular, superstar). This is because the first level (niche) is being used as a baseline. Thus each coefficient is in comparison to the baseline.
+
+Putting it in an equation:
+
+$ln \left( \frac{P(popular)}{P(niche)} \right) =  \beta_{10} + \beta_{11} \times avgMin + \beta_{12} \times multi$
+
+$ln \left( \frac{P(superstar)}{P(niche)} \right) =  \beta_{20} + \beta_{21} \times avgMin + \beta_{22} \times multi$
+
+If you exponentiate the both sides, you will see that one minute increase in avgMin leads to `r exp(coef(games_mlgt_0))[3]` times increase in odds of being a popular game over being a niche game.
+
+Here is a simple exercise, calculate the impact of 10 minute increase in avg min on odds of being a popular game over being a niche game.
+
+### Predicting Probabilities
+
+Here is another example where using mlogit is complicating things. Mlogit package requires data to follow a distinct pattern. Hence we need to create one row of data for each option to be able to predict probabilities.
+
+Here I will create a new dataset for three observations to be predicted. Since we have 3 levels in *status* variable, we will need 9 rows. I will vary the level of avgMin to investigate its effect on probabilities.
+
+```{r}
+gtmp <- games[1,]
+gtmp[1:9, ] <- games[1,]
+# Half of the average minutes
+gtmp[1:3, "avgMin"] <- mean(games$avgMin) / 2
+# Average minutes
+gtmp[4:6, "avgMin"] <- mean(games$avgMin)
+# Twice the average minutes
+gtmp[7:9, "avgMin"] <- mean(games$avgMin) * 2
+# Let us look at the data we created
+gtmp
+```
+
+Now let us predict the probabilities.
+
+```{r}
+predict(games_mlgt_0, gtmp)
+```
+
+You can see that the probability of being in popular/superstar categories increase as average minutes increases.
+
+# Solutions to Exercises
+
+1 - Calculate the odds and log odds of critical hit.
+
+```{r}
+p <- .05
+1/(1-p) # Odds
+log(1/(1-p)) # Log Odds
+```
+
+2 - Calculate the probability event, if the log odds are .5?
+
+```{r}
+lnOdds <- .5
+exp(lnOdds) # Odds
+exp(lnOdds) / (1 + exp(lnOdds)) # Probability
+```
+
+3 - Calculate the impact of 10 minute increase in avg min on odds of being a popular game.
+
+```{r}
+exp(coef(games_mlgt_0)[3]*10)
+```

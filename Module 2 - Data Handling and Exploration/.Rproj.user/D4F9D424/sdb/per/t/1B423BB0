@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "---\ntitle: \"Dimension Reduction\"\nauthor: \"Irfan Kanat\"\ndate: \"July 5, 2017\"\noutput:\n  html_document: default\n  pdf_document: default\ngeometry: margin=1in\nurlcolor: blue\n---\n\nIn this learning activity we will learn about Dimension Reduction using Principal Component Analysis. Dimension reduction is what you do when you have too many variables and you can not make up your mind about which ones are worthless :) .\n\n# COMING SOON",
+    "created" : 1499281432594.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "804759631",
+    "id" : "1B423BB0",
+    "lastKnownWriteTime" : 1503092289,
+    "last_content_update" : 1503092289837,
+    "path" : "~/Dropbox/QBAXXXX/R Content/Module 2 - Data Handling and Exploration/7_Dimension.Rmd",
+    "project_path" : "7_Dimension.Rmd",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

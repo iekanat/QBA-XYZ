@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1499209426421.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "F1E3FF89",
+    "lastKnownWriteTime" : 1499209413,
+    "last_content_update" : 1499209426421,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "9E547BAA",
+        "caption" : "univbct",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=univbct&cache_key=9E547BAA",
+        "displayedObservations" : 1485,
+        "environment" : "",
+        "object" : "univbct",
+        "preview" : 0,
+        "totalObservations" : 1485,
+        "variables" : 22
+    },
+    "relative_order" : 12,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
