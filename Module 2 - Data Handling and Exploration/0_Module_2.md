@@ -27,7 +27,7 @@ This module's module is made up of X learning activitites listed below. **BEFORE
 
 3 - Subsetting and Aggregating [PDF](3_Subsetting.pdf), [HTML](3_Subsetting.html), [Rmd](3_Subsetting.Rmd), [Video]() : Creating subsets of data with R.
 
-4 - Combining Datasets[PDF](4_Combine.pdf), [HTML](4_Combine.html), [Rmd](4_Combine.Rmd), [Video](): Combining datasets.
+4 - Combining Datasets [PDF](4_Combine.pdf), [HTML](4_Combine.html), [Rmd](4_Combine.Rmd), [Video](): Combining datasets.
 
 5 - Common Transformations [PDF](5_Transformations.pdf), [HTML](5_Transformations.html), [Rmd](5_Transformations.Rmd), [Video]() : An introduction to normalization, and some common transformations such as log, box-cox transformation.
 
