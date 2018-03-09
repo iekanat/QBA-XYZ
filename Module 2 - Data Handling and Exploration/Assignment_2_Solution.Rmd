@@ -1,0 +1,142 @@
+---
+title: "Assignment 2"
+author: "Irfan Kanat"
+date: "March 8, 2018"
+output:
+  pdf_document: default
+  html_document: default
+---
+This is an assignment to evaluate your learning in module two. For each learning activity there is a section in this document. Answer each question below the question and create an R Markdown document for submission.
+
+*For the rest of the exercises we will use games.csv in the data folder. Import the file into a data.frame called games to begin the exercise.*
+
+```{r}
+# Import necessary packages
+library(ggplot2)
+# Import games.csv from data folder
+games <- read.csv("data/games.csv")
+```
+
+## 1 - Describe
+
+### Visual Inspection
+
+Show the top 6 rows of *games*.
+
+```{r}
+head(games)
+```
+
+### Descriptive Statistics
+
+Use *summary* function to provide basic descriptive statistics for *games*.
+
+```{r}
+summary(games)
+```
+
+Use *str* function to provide an overview of data structure for *games*.
+
+```{r}
+str(games)
+```
+
+## 2 - Visualization
+
+### Histogram
+
+Plot out the distribution of price variable in a histogram.
+
+```{r}
+qplot(x = listPrice, data = games, geom = "histogram")
+```
+
+### Scatter Plot
+
+Plot the relation between avgMin (on average how much time players spent in game) and reviews.
+
+```{r}
+qplot(x = avgMin, y = reviews, data = games)
+```
+
+
+### Bar Chart
+
+Plot the frequency of status types in *games*.
+
+```{r}
+qplot(x = status, data = games, geom = "bar")
+```
+
+## 3 - Subsetting
+
+### Selecting Rows and Columns
+
+Show only the games that have SuperStar status.
+
+```{r}
+games[games$status == "SuperStar",]
+```
+
+Show only the first three rows.
+
+```{r}
+games[,1:3]
+```
+
+### Aggregating
+
+Calculate the average price for each status category, save the results into a data.frame called *gameAvgPrice*.
+
+```{r}
+# Using formula interface for aggregate
+gameAvgPrice <- aggregate(listPrice ~ status, games, mean)
+```
+
+Change the name of the column listPrice in *gameAvgPrice* to avgCategoryPrice.
+
+```{r}
+colnames(gameAvgPrice) <- c("status", "avgCategoryPrice")
+```
+
+### Combine Datasets
+
+Combine *games* and *gameAvgPrice* so that the average price for category is displayed next to each game. Save the results into *games* data.frame.
+
+I want column avgCategoryPrice to be added to games, in such a way that it shows the average price for the correct status. A game that is a niche player will show 10.87 in avgCategoryPrice for example.
+
+```{r}
+games <- merge(games, gameAvgPrice, by="status")
+```
+
+## Transformations
+
+Add a new column to *games* named logListPrice, and store log transformed list price in this column. Don't forget log of 0 is meaningless, take the necessary precautions to ensure this does not lead to loss of data.
+
+```{r}
+games$logListPrice <- log(games$listPrice + 1)
+```
+
+## Missing Data
+
+Show how many rows there are in games.
+
+```{r}
+nrow(games)
+```
+
+Exclude any observations that are missing data on reviews column. Save the resulting data.frame in *games*
+
+```{r}
+games <- games[!is.na(games$reviews),]
+```
+
+Show how many rows there are after removal of observations.
+
+```{r}
+nrow(games)
+```
+
+## Dimension Reduction
+
+WIP
