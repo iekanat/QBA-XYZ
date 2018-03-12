@@ -25,7 +25,7 @@ codes <- read.csv("data/codes.csv")
 
 The dataset has 3 variables Name of the Country, ISO2 Code, and ISO3 Code.
 
-I will change the column names to ensure uniformity (and to demonstrate how its done).
+I will change the column names to ensure uniformity (and to demonstrate how it's done).
 
 ```{r}
 colnames(codes) <- c("name", "iso2", "iso3")
@@ -44,7 +44,7 @@ Data has 3 variables, ISO3, Year, Users.
 
 3 - Internet Servers
 
-Worldbank data on sercure internet servers per 1 million people
+Worldbank data on secure internet servers per 1 million people
 
 ```{r}
 servers <- read.csv("data/Servers.csv")
