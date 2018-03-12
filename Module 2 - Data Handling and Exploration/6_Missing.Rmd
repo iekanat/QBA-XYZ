@@ -44,7 +44,7 @@ If your data is missing at random, you need to make a call. What is the best way
 
 If your data is not missing at random, the problem is a bit more serious. Some methods used in MAR can help. You may also look at pre-processing the data to obtain a balanced sample with an approach like Coarsened Exact Matching.
 
-Another consideration is where the data is missing. It is usually not that big of a deal if the data is missing in independent variables. But if you are missing the variable you are trying to estimate (dependent variable) that is a problem. This is somewhat related to self selection bias. For example, people who buy optional insurance are generally risk averse. In all likelihood, you won't observe lots of risky people in indentity theft insurance data. Can you make generalizations on the broader public from a dataset of risk averse people?
+Another consideration is where the data is missing. It is usually not that big of a deal if the data is missing in independent variables. But if you are missing the variable you are trying to estimate (dependent variable) that is a problem. This is somewhat related to self-selection bias. For example, people who buy optional insurance are generally risk averse. In all likelihood, you won't observe lots of risky people in identity theft insurance data. Can you make generalizations on the broader public from a dataset of risk averse people?
 
 ### Inspect Your Data for Missingness
 
@@ -56,7 +56,7 @@ summary(itInfrastructure)
 
 Under some variables you can see NA's reported. NA is how R reports missingness.
 
-You can see we have some missingness in country name and iso2 numbers. Those don't concern me, basically this is a matter of coding. An inspection reveals missing values are from microstates like Andorra or territories like American Samoa. Knowing how the data is created, most probably these were not included in codes dataset, and can still be used as names or iso2 are not variables we can not do without (iso3 is perfect substitute for both).
+You can see we have some missingness in country name and iso2 numbers. Those don't concern me, basically this is a matter of coding. An inspection reveals missing values are from microstates like Andorra or territories like American Samoa. Knowing how the data is created, most probably these were not included in codes dataset, and can still be used as names or iso2 are not variables we cannot do without (iso3 is perfect substitute for both).
 
 The real missingness, we should be worried about is in Users and Servers. Especially on Servers there is a lot more missingness. Simply looking at number of  missing observations in a column will not however tell you if the missingness is due to some common factor or not. It won't tell you of the mechanism. 
 
@@ -71,7 +71,7 @@ The results mean 365 observations have complete data for both Users and iso2. 7 
 
 26/33 missing values from users are also missing from servers. This may mean the missingness is due to a common factor.
 
-At this stage, you need to go out and and think about where data comes from, how it is collected, how it is put together. An inspection of data, reveals that the missingness is focused on developing/third world countries. The data collection in these places were not as rigorous and created patterns of missingness. This means there is a systematic pattern to missingness.
+At this stage, you need to go out and think about where data comes from, how it is collected, how it is put together. An inspection of data, reveals that the missingness is focused on developing/third world countries. The data collection in these places were not as rigorous and created patterns of missingness. This means there is a systematic pattern to missingness.
 
 Now you know a thing or two about investigating missingness.
 
