@@ -15,7 +15,7 @@ First order of business in any analytics task is to understand what we have in o
 
 Let us think of an example. Let's say you have 30 bags full of oranges, while there is some difference in weights they are more or less the same. 
 
-Don't worry about the code below, I will create a series of weights for our hypothetical bags. Right now the things I do may be hard to follow, but they are not essential anyway.
+Don't worry about the code below, I will create a series of weights for our hypothetical bags. Right now, the things I do may be hard to follow, but they are not essential anyway.
 
 ```{r}
 # Setting the seed for random number generator so that examples stay consistent.
@@ -38,7 +38,7 @@ You can also achieve the same in the commandline by simply typing the name of th
 bagsOfOranges
 ```
 
-If you want to simply see top observations you can use head() function.
+If you want to simply see the observations in the first few rows you can use head() function.
 
 ```{r}
 # n parameter specifies how many lines to display, it is optional meaning you can leave it out.
@@ -116,7 +116,7 @@ Remember we can use logic operators to evaluate a statement. Let us see which ba
 # Observe the output of logic operator, we are trying to see which bags have more than 2 pounds
 bagsOfOranges$weight > 2 # Is weight greater than 2?
 # The output is a series of True False
-# If we feed this output into out dataframe index, it will only spit out the rows where evaluation is TRUE.
+# If we feed this output into our dataframe index, it will only spit out the rows where evaluation is TRUE.
 bagsOfOranges[bagsOfOranges$weight > 2, ]
 ```
 
@@ -151,7 +151,7 @@ mean(bagsOfApples$weight)
 mean(bagsOfOranges$weight)
 ```
 
-The two figures are pretty close to each other. Can we say the a bag of apple will weigh more or less the same as a bag of oranges?
+The two figures are pretty close to each other. Can we say that a bag of apples will weigh more or less the same as a bag of oranges?
 
 Not really. Mean is a simple model and is useful if the difference (variance) in bags is also similar between the groups. If there is great difference between weight of bags between two groups, mean is not very useful (as one bag can be .7 pounds and the next may be 3.4 pounds).
 
@@ -166,7 +166,7 @@ sd(bagsOfOranges$weight)
 
 You can see the difference between weights of Orange bags is much smaller than the difference between the weights of Apples.
 
-Let me take a segway and show you what this difference means visually. For now do not worry too much about the code, you will learn how to visualize data in the following learning activity.
+Let's look into what this difference means visually. For now, do not worry too much about the code, you will learn how to visualize data in the following learning activity.
 
 ```{r}
 library(ggplot2) # Load the necessary library for fancy plots
@@ -201,13 +201,13 @@ p2 <- ggplot(data = bagsOfOranges, aes(weight)) + # initialize a plot for data
 grid.arrange(p1, p2)
 ```
 
-Look at the above plots. These are called histograms, the histogram shows us how many bags were observed in a certain weight class. 
+Look at the above plots. These are called histograms, this histogram shows us how many bags were observed in a certain weight class. 
 
 Oranges is pretty normally distributed with a small standard deviation, whereas apples have a large standard deviation. Hence the mean value does not quite work to compare apples and oranges as they are quite differently distributed.
 
 ### T Test
 
-I want to take a tiny segway here. If you want to compare two groups and to see if they are the same or not (Do men and women weight the same? Are business students and engineering students have similar SAT scores?) you can use a t test. In a normal distribution roughly 99.7% of observations will be 2 standard deviations away from the mean. Basically a T test compares the mean values of each group and using standard deviations, it determines if they are indeed the same.
+I want to take a tiny segue here. If you want to compare two groups and to see if they are the same or not (Do men and women weight the same? Are business students and engineering students have similar SAT scores?) you can use a t test. In a normal distribution roughly 99.7% of observations will be 2 standard deviations away from the mean. Basically, a T test compares the mean values of each group and using standard deviations, it determines if they are indeed the same.
 
 
 ```{r}
@@ -220,7 +220,7 @@ The p value below .05 indicates the t test shows statistically significant diffe
 
 The apples and oranges were normally distributed (a bell curve with more or less equal number of observations on either side of mean). When distribution is not normal (Consider how wages are distributes with lots of observations on the left with low wages and few very high observations to the right) it is best to report the median instead of the mean. Median is the middle observation, with exactly the same number of observations above and below median.
 
-Since apples were normally distributed median will be similar to mean.
+Since apples were normally distributed, median will be similar to mean.
 
 ```{r}
 median(bagsOfApples$weight)
@@ -240,7 +240,7 @@ Let us start with loading the dataset.
 data(mtcars)
 ```
 
-As we learned in the section on packages, you can querry the documentation for almost anything. Including the datasets included in packages. The document includes descriptions of the variables.
+As we learned in the section on packages, you can query the documentation for almost anything. Including the datasets included in packages. The document includes descriptions of the variables.
 
 ```{r}
 ?mtcars
@@ -268,7 +268,7 @@ describe(mtcars)
 
 As you can see, beyond what is reported in summary, describe function also reports standard deviation and standard error. 
 
-You may notice skewness and kurtosis of the data. These are useful in estimating how far the distribution is from normal (bell curve). Skewness shows how far from symetrical the distribution. Skewness for a normal distribution is zero, symetrical data should have values close to zero. Kurtosis is the amount of data below the tails. The kurtosis for normal distribution is 0. The further from the normal, the more different the values will be.
+You may notice skewness and kurtosis of the data. These are useful in estimating how far the distribution is from normal (bell curve). Skewness shows how far from symmetrical the distribution. Skewness for a normal distribution is zero, symmetrical data should have values close to zero. Kurtosis is the amount of data below the tails. The kurtosis for normal distribution is 0. The further from the normal, the more different the values will be.
 
 At first the skewness and kurtosis may seem alarming, I just want you to realize there is no normal distribution in real life. All data differs from normal to some degree. You can test for normality using various tests like Kolmogorov-Smirnov tests. If your goal is prediction, deviations from normalcy is not a really big deal. The real problems start when you try using the model for explanation.
 
@@ -307,7 +307,7 @@ Let us see a tabulation of Transmission type (Automatic = 0 and Manual = 1) by N
 table(mtcars[, c("am", "cyl")])
 ```
 
-Based on the data most cars with 8 cylinders come with automatic transmissions. For 4 cylinder cars, most of them are manual.
+Based on the data most cars with 8 cylinders come with automatic transmissions. For 4-cylinder cars, most of them are manual.
 
 ## Solutions to Exercises
 
