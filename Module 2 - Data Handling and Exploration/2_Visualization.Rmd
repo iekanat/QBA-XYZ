@@ -22,13 +22,13 @@ R base comes with adequate plotting functionality and there are lots of small sp
 
 I will first demonstrate most common types of plots (histograms, scatter plots, and line plots) with qplot and move on to how the same results can be achieved in ggplot.
 
-Here is a little exercise for you (you should know this from Packages and Package Management learning activity from previous module). Install and activate ggplot2 package (solution is at the bottom of this document if you can not figure out how).
+Here is a little exercise for you (you should know this from Packages and Package Management learning activity from previous module). Install and activate ggplot2 package (solution is at the bottom of this document if you cannot figure out how).
 
 ## Introducing the Datasets
 
 We will use several datasets in this learning activity. You should remember the bagsOfOranges, bagsOfApples, and mtcars data sets from the previous learning activity Descriptive Statistics.
 
-I will create an additional dataset to to use with line plots, don't worry about the code below at this point.
+I will create an additional dataset to use with line plots, don't worry about the code below at this point.
 
 ```{r}
 set.seed(2017) # Set seed for random number generator for replicability
@@ -65,7 +65,7 @@ qplot is a simplified interface for ggplot functionality. It tries to figure out
 
 A histogram is useful if you are interested in how a continuous variable is distributed. For continuous variables, histogram will show how many observations (frequency) fall into a range (bin). An example would be number of orange bags that weigh between 2 and 2.1 pounds. 
 
-Let's say, we are interested in how the weight of bags of oranges vary. To answer this question we can use a histogram.
+Let's say, we are interested in how the weight of bags of oranges vary. To answer this question, we can use a histogram.
 
 Let us plot this example.
 
@@ -90,7 +90,7 @@ If the variable is categorical, a bar chart can be used to show frequencies of a
 
 Let us say we want to know, the number of cars in each gear category. How many cars with 3 gears, how many with 4 and so on...
 
-Let remember the previous learning activity. Remember, we tabulated the number of gears. So we already know the quantitative answer.
+Let remember the previous learning activity. Remember, we tabulated the number of gears. So, we already know the quantitative answer.
 
 ```{r}
 table(mtcars$gear)
@@ -113,11 +113,11 @@ I call the qplot() function with qplot()
 
 1. x = factor(gear): I specify the variable I want plotted (*gear*) but I make R know this variable is categorical with factor() function.
 2. data = mtcars: I tell qplot where to find *gear*, by declaring data source as mtcars
-3. geom = "bar": I tell qplot what type of plot I desire *geom="bar"* basically geometry is bar chart
+3. geom = "bar": I tell qplot what type of plot I desire *geom="bar"* geometry is bar chart
   
 qplot assumes I want frequencies by default.
 
-*Next step after looking at a variable by itself is to look at a variable in relation to other variables.* You can use the bar chart to demonstrate the frequency of one categorical variable, broken down by another categorical variable. Thus establishing relationship between two categorical variables.
+*Next step after looking at a variable by itself is to look at a variable in relation to other variables.* You can use the bar chart to demonstrate the frequency of one categorical variable, broken down by another categorical variable. Thus, establishing relationship between two categorical variables.
 
 Let us start with a tabulation to see what raw data says about the relationship between transmission type (Automatic = 0) and number of gears.
 
@@ -148,17 +148,17 @@ qplot(hp, mpg, data = mtcars)
 
 I did not specify a geom this time, qplot assumes "point" by default.
 
-The plot shows that there is an inverse relationship between horse power and fuel efficiency. Basically stronger cars guzzle up more gas.
+The plot shows that there is an inverse relationship between horse power and fuel efficiency. Basically, stronger cars guzzle up more gas.
 
 *Again, we can up the ante by introducing an additional variable.* Since this is a two dimensional plot, we need to use something other than x or y axes to map to the additional variable. 
 
-Let us say you are also interested in the effect of number of cylinders on these two (hp and mpg) variables. You can use colors or symbols to overlay additional variables. So the variable does not show just two, but three variables. Let us color the dots by the number of cylinders.
+Let us say you are also interested in the effect of number of cylinders on these two (hp and mpg) variables. You can use colors or symbols to overlay additional variables. So, the variable does not show just two, but three variables. Let us color the dots by the number of cylinders.
 
 ```{r}
 qplot(hp, mpg, data = mtcars, color = factor(cyl), shape = factor(cyl), alpha = .5)
 ```
 
-The additional parameter of color = factor(cyl) should be self explanatory. I instruct qplot to color the dots by number of cylinders.
+The additional parameter of color = factor(cyl) should be self-explanatory. I instruct qplot to color the dots by number of cylinders.
 
 Similarly, shape = factor(cyl) means use different shapes for different number of cylinders (this is useful if your report will be viewed in black and white).
 
@@ -170,9 +170,9 @@ This is quickly getting out of hand, but let us say you want to visualize FOUR v
 qplot(hp, mpg, data = mtcars, color = factor(cyl), size = disp, alpha = .08)
 ```
 
-Let us review what we have learned so far. We can map variables to the axes of the plot, we can map them to the shape, color, or size of the dots. Using these different dimensions you can create informative visualizations that communicate what you are trying to explain. A word of caution: Don't over do it. Human mind can only process so much data at once. More variables do not necessarily mean a better visualization. Keep it simple. Use a visualization to communicate a relation you want to emphasize, not to explain everything about the dataset in one graph. Most of the time it is better to have a few simple visualizations than to have a very complex one.
+Let us review what we have learned so far. We can map variables to the axes of the plot, we can map them to the shape, color, or size of the dots. Using these different dimensions, you can create informative visualizations that communicate what you are trying to explain. A word of caution: Don't overdo it. Human mind can only process so much data at once. More variables do not necessarily mean a better visualization. Keep it simple. Use a visualization to communicate a relation you want to emphasize, not to explain everything about the dataset in one graph. Most of the time it is better to have a few simple visualizations than to have a very complex one.
 
-Another way to express the relation between two variables is to fit a regression line. Basically the slope of the line shows you how much one variable changes when you change the other variable by one unit.
+Another way to express the relation between two variables is to fit a regression line. Basically, the slope of the line shows you how much one variable changes when you change the other variable by one unit.
 
 This is where things start to get a bit ggplotty. You can overlay ggplot layers on top of qplot outputs (you will understand what this means better in a second).
 
@@ -185,7 +185,7 @@ qplot(hp, mpg, data = mtcars) +
 
 If you have a variable that changes over time, a line plot is a good way to visualize the trajectory over time.
 
-We will use the profits dataset. profits shows profits for three companies (A, B, C) over a five year period between 2013 and 2017.
+We will use the profits dataset. profits shows profits for three companies (A, B, C) over a five-year period between 2013 and 2017.
 
 Let us say, we want to see how profits of these companies change over the years.
 
@@ -291,7 +291,7 @@ ggplot(data = mtcars, aes(x = factor(cyl), y = hp)) +
 
 ### Histogram
 
-Remember histogram is for continous variables and shows frequency.
+Remember histogram is for continuous variables and shows frequency.
 
 ```{r}
 # Initialize the plot with variables of interest
