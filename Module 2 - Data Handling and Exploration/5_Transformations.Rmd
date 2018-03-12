@@ -39,11 +39,11 @@ data(sat.act)
 
 ## Transformations for Non-Normal Data
 
-The methods discussed below will bring your data closer to a normal distribution. But you should be aware of the caveat. The coefficients estimated in models with transformed variables do not mean the same thing. So take heed in presenting results of transformed data. What needs to be done depends on the type of transformation. 
+The methods discussed below will bring your data closer to a normal distribution. But you should be aware of the caveat. The coefficients estimated in models with transformed variables do not mean the same thing. So, take heed in presenting results of transformed data. What needs to be done depends on the type of transformation. 
 
 ### Right Skewed Data
 
-Prices, wages, wealth or other monetary figures often follow a power law distribution. This means you will have lots of observations on the left hand side of the scale and a handful of very large amounts on the right hand side. To help you visualize imagine how many people live on minimum wage, that is the left hand side. Now imagine how many people earn over 5 million dollars, that is the far right end.
+Prices, wages, wealth or other monetary figures often follow a power law distribution. This means you will have lots of observations on the left-hand side of the scale and a handful of very large amounts on the right-hand side. To help you visualize imagine how many people live on minimum wage, that is the left-hand side. Now imagine how many people earn over 5 million dollars, that is the far right end.
 
 If your goal is prediction the independent variable not being normally distributed is not an issue at all, but in some cases an otherwise significant relation may show up non-significant. Hence it is a good idea to transform these variables (or take the outliers out somehow).
 
@@ -53,7 +53,7 @@ Let us look at the distribution of zillow rent index. This is not a perfect exam
 qplot(zillow$Zri)
 ```
 
-Most places in the country have rents that are below \$2000, so you see high, easy to see bars on the left. There is virtually 0 free homes, so the x axis starts somewhere around \$500. What you don't see is why the right hand side of the plot keeps going up to $17000. 
+Most places in the country have rents that are below \$2000, so you see high, easy to see bars on the left. There are virtually 0 free homes, so the x axis starts somewhere around \$500. What you don't see is why the right-hand side of the plot keeps going up to $17000. 
 
 There are two counties in California where the rents are above $15000. That push the boundary way out into \$16600 range.
 
@@ -69,7 +69,7 @@ log(1500)  # $1500 is 7.3
 log(15000) # $15000 is 9.6
 ```
 
-The log transformations shrinks the higher values more than it does the lower values, hence pulling those extreme observations back into the fold. In a sense, it gets rid of outliers without sacrificing data points. 
+The log transformation shrinks the higher values more than it does the lower values, hence pulling those extreme observations back into the fold. In a sense, it gets rid of outliers without sacrificing data points. 
 
 Let us see what happens in a visual example.
 
@@ -89,7 +89,7 @@ zillow$logZri <- log(zillow$Zri)
 head(zillow[, c("logZri", "Zri")])
 ```
 
-When data is transformed this way, you need to take heed in interpreting coefficients. The beta coefficient no longer stands for a 1 unit change in ZRI.
+When data is transformed this way, you need to take heed in interpreting coefficients. The beta coefficient no longer stands for a 1-unit change in ZRI.
 
 Another issue you should be aware of is that log transformation only works with positive values.
 
@@ -121,7 +121,7 @@ Here is a simple exercise for you, calculate square root transformed ZRI and sto
 
 ### Left Skewed Data
 
-Some values such as aptitude scores are left skewed, with majority of the observations on the right hand side and just a few observations on the left. 
+Some values such as aptitude scores are left skewed, with majority of the observations on the right-hand side and just a few observations on the left. 
 
 SAT scores are traditionally of this kind. 
 
@@ -154,7 +154,7 @@ A more advanced version of log transformation is box-cox transformation. It find
 
 There may be certain cases where you may want to normalize data. Certain types of analysis (Principal Component Analysis) would be sensitive to differences in scale for example. Another case would be to compare coefficients. The coefficients would mean one thing for a variable that ranges between 1000000 and 5000000, and another for a variable that ranges between 1 and 5.
 
-Standardization in our case is substracting the mean value from each observation and dividing the remainder by sd. The result is the variable will have a mean of 0 and a standard deviation of 1. If all variables are standardized, the coefficients will mean exactly the same thing for each variable.
+Standardization in our case is subtracting the mean value from each observation and dividing the remainder by sd. The result is the variable will have a mean of 0 and a standard deviation of 1. If all variables are standardized, the coefficients will mean exactly the same thing for each variable.
 
 Let us standardize the Zillow Rent Index in zillow dataset and store it in a variable called stdZri.
 
@@ -167,7 +167,7 @@ sd(zillow$stdZri) # Looks good
 head(zillow[, c("Zri", "stdZri")])
 ```
 
-Remember the mean Zri is `r round(mean(zillow$Zri))`. So values higher than the mean Zri are positive whereas values lower than Zri are negative.
+Remember the mean Zri is `r round(mean(zillow$Zri))`. So, values higher than the mean Zri are positive whereas values lower than Zri are negative.
 
 
 ## Solution to Exercises
