@@ -30,7 +30,7 @@ Handling missing data can be as simple as ignoring it, and there are many occasi
 
 Let us talk about reasons of missingness, briefly:
 
-**Missing Completely at Random (MCAR)** There is no pattern to missingness. The missingness, does not result variable itself or other variables we can control for. An example would be interference from passing radio sources on sensor equipment. Car radios are not predictable and they are not related to what the sensors are measuring, or anything we are modelling.
+**Missing Completely at Random (MCAR)** There is no pattern to missingness. The missingness, does not result variable itself or other variables we can control for. An example would be interference from EM sources on sensor equipment. Solar flares are not predictable and they are not related to what the sensors are measuring, or anything we are modelling.
 
 **Missing at Random (MAR)** Missing values are not a result of variable itself but can be related to levels of other variables. An example would be school attendance over the years. You are more likely to not have observations for children from low income families. Their missingness from the data is a factor of a variable you can observe.
 
