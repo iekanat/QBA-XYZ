@@ -76,7 +76,7 @@ Let us see what happens in a visual example.
 ```{r}
 p1 <- qplot(zillow$Zri)
 p2 <- qplot(log(zillow$Zri))
-grid.arrange(p1, p2, ncol = 2)
+grid.arrange(p1, p2, ncol = 2) # grid arrange puts two plots side by side
 ```
 
 Note the differences on scale in both x and y axes. While not perfect, log transformed zillow rent index looks a lot more normal compared to untransformed version.
