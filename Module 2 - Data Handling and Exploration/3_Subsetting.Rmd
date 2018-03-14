@@ -87,7 +87,7 @@ You learned about two new operators %in% (matching) and ! (inverse).
 
 You may be interested in only certain rows in a dataset. 
 
-Let us say we want to focus on rent in Ohio counties only. You remember logic operators from earlier learning activities. 
+Let us say we want to focus on rent in Ohio counties only. Remember the logic operators from earlier learning activities. 
 
 ```{r}
 zillowOH <- zillow[zillow$State == "OH", ]
@@ -216,13 +216,13 @@ rm(zillowOW)
 
 ## Aggregating
 
-Zillow Data is at zip code level. Let us say we are interested in State level data. We do not care about specific zip codes. Should we look for state level data elsewhere or is there a way to convert the zip code level data to state level.
+Zillow Data is at zip code level. Let us say we are interested in State level data. We do not care about specific zip codes. Should we look for state level data elsewhere or is there a way to convert the zip code level data to state level?
 
 What we can do is to aggregate the zip code level data to obtain a State level dataset.
 
 Aggregating allows you to come up with combined measures for broad categories from lower level observations. You can aggregate individual student scores to obtain a school level score, or company level profitability data to obtain industry level profitability measures.
 
-When you are aggregating data you need to make certain decisions about variables. Certain variables are more meaningful as averages (average rent in OH), other variables are more meaningful as sums (population), and yet others as maximums (Dates). Some variables will need to be abandoned all together (zip codes). The correct function to use will depend on the analysis you want to do. It is a judgment call, and it is hard to teach. Just use your intuition and try to learn from your mistakes as you go.
+When you are aggregating data, you need to make certain decisions about variables. Certain variables are more meaningful as averages (average rent in OH), other variables are more meaningful as sums (population), and yet others as maximums (Dates). Some variables will need to be abandoned all together (zip codes). The correct function to use will depend on the analysis you want to do. It is a judgment call, and it is hard to teach. Just use your intuition and try to learn from your mistakes as you go.
 
 The simplest way to aggregate data that is available in R Base is the aggregate() function. Let us inspect manual pages for aggregate().
 
@@ -262,11 +262,11 @@ Let us break the command down:
   + FUN = mean: use mean function to calculate average values for States.
   + na.rm = T: Remove missing observations (more on this later).
   
-Translation to plain english would be: "calculate the averages of everything in zillowSS0[,-1] by State, skip missing observations in calculations."
+Translation to plain English would be: "calculate the averages of everything in zillowSS0[,-1] by State, skip missing observations in calculations."
 
 It has 51 observations, same as the number of states... That is encouraging.
 
-Let us see if we got it right, by calculating the average Zri for Ohio and comparing it to aggregated value of Zri.
+Let us see if we got it right by calculating the average Zri for Ohio and comparing it to aggregated value of Zri.
 
 ```{r}
 mean(zillow[zillow$State == "OH", "Zri"])
