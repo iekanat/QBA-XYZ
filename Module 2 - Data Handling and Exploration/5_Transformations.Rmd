@@ -15,7 +15,7 @@ library(gridExtra)
 library(psych)
 ```
 
-In this learning activity we will learn about when and why transforming data may be justified as well as some common transformations.
+In this learning activity, we will learn about when and why transforming data may be justified as well as some common transformations.
 
 Going back to our discussion of normal distribution, mean and standard deviation in Descriptive Statistics learning activity, sometimes the distribution of variables, or the sheer scale (number of rooms 1-10, versus the price of a house 100000-3000000) makes comparisons difficult. Especially if you want to compare the effect sizes in statistical models some sort of transformation is useful.
 
@@ -39,11 +39,11 @@ data(sat.act)
 
 ## Transformations for Non-Normal Data
 
-The methods discussed below will bring your data closer to a normal distribution. But you should be aware of the caveat. The coefficients estimated in models with transformed variables do not mean the same thing. So, take heed in presenting results of transformed data. What needs to be done depends on the type of transformation. 
+The methods discussed below will bring your data closer to a normal distribution. But you should be aware of the caveat. The coefficients estimated in models with transformed variables do not mean the same thing. So, take heed in presenting results of transformed data because what needs to be done depends on the type of transformation. 
 
 ### Right Skewed Data
 
-Prices, wages, wealth or other monetary figures often follow a power law distribution. This means you will have lots of observations on the left-hand side of the scale and a handful of very large amounts on the right-hand side. To help you visualize imagine how many people live on minimum wage, that is the left-hand side. Now imagine how many people earn over 5 million dollars, that is the far right end.
+Prices, wages, wealth or other monetary figures often follow a power law distribution. This means you will have lots of observations on the left-hand side of the scale and a handful of very large amounts on the right-hand side. To help you visualize imagine how many people live on minimum wage, that is the left-hand side. Now imagine how many people earn over 5 million dollars: that is the far right end.
 
 If your goal is prediction the independent variable not being normally distributed is not an issue at all, but in some cases an otherwise significant relation may show up non-significant. Hence it is a good idea to transform these variables (or take the outliers out somehow).
 
@@ -98,7 +98,7 @@ log(0)
 log(-5)
 ```
 
-If your data has zeros you can simply add 1 to all observations, for negative values cube rooting instead of log transformation may help.
+If your data has zeros, you can simply add 1 to all observations, for negative values cube rooting instead of log transformation may help.
 
 *Square Root Transformation*
 
@@ -133,7 +133,7 @@ qplot(sat.act$SATQ, binwidth = 25)
 
 **Square Transformation**
 
-If your data is left skewed taking the square of the values may help a bit. Let us see.
+If your data is left skewed, taking the square of the values may help a bit. Let us see.
 
 ```{r}
 p1 <- qplot(sat.act$SATQ)
