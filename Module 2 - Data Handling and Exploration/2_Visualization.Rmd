@@ -88,7 +88,7 @@ Here I call the qplot() function with various parameters:
 
 If the variable is categorical, a bar chart can be used to show frequencies of a categorical variable's levels. Such as number of cars with automatic or manual transmission. A bar chart is useful beyond frequencies as we will discuss later.
 
-Let us say we want to know, the number of cars in each gear category. How many cars with 3 gears, how many with 4 and so on...
+Let us say we want to know the number of cars in each gear category. How many cars with 3 gears, how many with 4 and so on...
 
 Let remember the previous learning activity. Remember, we tabulated the number of gears. So, we already know the quantitative answer.
 
@@ -131,7 +131,7 @@ Same data can be visualized with a bar chart as follows:
 qplot(x = factor(gear), data = mtcars,  fill = factor(am), geom = "bar") # used factor to declare categorical
 ```
 
-This visualization demonstrates that certain number of gears are only observed in automatic or manual transmissions (remember the data is from 1974). Giving us an insight, basically gear would be a good predictor for transmission type.
+This visualization demonstrates that certain number of gears are only observed in automatic or manual transmissions (remember the data is from 1974). Basically, gear would be a good predictor for transmission type.
 
 Here I added an additional parameter, specifying which variable to use in filling the bar. fill=factor(am) makes qplot use am (transmission type) to change the color of fillings of the bars.
 
