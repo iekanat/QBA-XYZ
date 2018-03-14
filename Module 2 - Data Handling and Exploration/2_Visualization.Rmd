@@ -16,9 +16,9 @@ bagsOfOranges <- read.csv(file = "data/bagsOfOranges.csv")
 data(mtcars)
 ```
 
-In this learning activity we will learn about creating descriptive visualizations of data sets to see how variables are distributed, or how they relate to each other.
+In this learning activity, we will learn about creating descriptive visualizations of data sets to see how variables are distributed, or how they relate to each other.
 
-R base comes with adequate plotting functionality and there are lots of small specialized packages to create different plots. In this activity we will focus on ggplot2 package. The reason for this selection is because ggplot2 is a very versatile package that enables a broad range of plots to be created. I will focus mostly on qplot() function, and discuss ggplot structure only briefly. 
+R base comes with adequate plotting functionality and there are lots of small specialized packages to create different plots. In this activity, we will focus on ggplot2 package. The reason for this selection is because ggplot2 is a very versatile package that enables a broad range of plots to be created. I will focus mostly on qplot() function, and discuss ggplot structure only briefly. 
 
 I will first demonstrate most common types of plots (histograms, scatter plots, and line plots) with qplot and move on to how the same results can be achieved in ggplot.
 
@@ -150,9 +150,9 @@ I did not specify a geom this time, qplot assumes "point" by default.
 
 The plot shows that there is an inverse relationship between horse power and fuel efficiency. Basically, stronger cars guzzle up more gas.
 
-*Again, we can up the ante by introducing an additional variable.* Since this is a two dimensional plot, we need to use something other than x or y axes to map to the additional variable. 
+*Again, we can up the ante by introducing an additional variable.* Since this is a two-dimensional plot, we need to use something other than x or y-axes to map to the additional variable. 
 
-Let us say you are also interested in the effect of number of cylinders on these two (hp and mpg) variables. You can use colors or symbols to overlay additional variables. So, the variable does not show just two, but three variables. Let us color the dots by the number of cylinders.
+Let us say you are also interested in the effect of the number of cylinders on these two (hp and mpg) variables. You can use colors or symbols to overlay additional variables. So, the variable does not show just two, but three variables. Let us color the dots by the number of cylinders.
 
 ```{r}
 qplot(hp, mpg, data = mtcars, color = factor(cyl), shape = factor(cyl), alpha = .5)
@@ -185,7 +185,7 @@ qplot(hp, mpg, data = mtcars) +
 
 If you have a variable that changes over time, a line plot is a good way to visualize the trajectory over time.
 
-We will use the profits dataset. profits shows profits for three companies (A, B, C) over a five-year period between 2013 and 2017.
+We will use the profits dataset. The profits shows profits for three companies (A, B, C) over a five-year period between 2013 and 2017.
 
 Let us say, we want to see how profits of these companies change over the years.
 
@@ -240,7 +240,7 @@ This may all be very confusing when you read about them. It is much easier to un
 
 Now it is time to go over an example that is a bit more advanced. I will introduce two new concepts: (1) other uses of bar charts, and (2) use of ggplot.
 
-A histogram is specific to continuous variables and frequencies, a bar chart is more versatile. It can be used for many more purposes, such as reporting average horse power (continuous) for different number of cylinders.
+A histogram is specific to continuous variables and frequencies, while a bar chart is more versatile. It can be used for many more purposes, such as reporting average horse power (continuous) for different number of cylinders.
 
 Let us plot that example of horse power over number of cylinders.
 
@@ -362,7 +362,7 @@ ggplot(data = profits, aes(x = year, y = profit, color = company)) +
   ylim(0, 120) # Change the range of Y variable to put a more objective slant on things
 ```
 
-The syntax should be familiar to you by now. The only new addition is the ylim, basically I specify the range of Y variable to plot so that the profits can be seen in a more objective light. Skewing the range of Y variable is how advertisers sometimes use visualizations to mislead people. If you hold the range small, a tiny change may appear big. See below:
+The syntax should be familiar to you by now. The only new addition is the ylim. Basically, I specify the range of Y variable to plot so that the profits can be seen in a more objective light. Skewing the range of Y variable is how advertisers sometimes use visualizations to mislead people. If you hold the range small, a tiny change may appear big. See below:
 
 ```{r}
 ggplot(data = profits, aes(x = year, y = profit, color = company)) +
