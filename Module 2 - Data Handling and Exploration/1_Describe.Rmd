@@ -13,9 +13,9 @@ First order of business in any analytics task is to understand what we have in o
 
 ## Visual Inspection
 
-Let us think of an example. Let's say you have 30 bags full of oranges, while there is some difference in weights they are more or less the same. 
+Let us think of an example. Let's say you have 30 bags full of oranges. While there is some difference in weights, they are more or less the same. 
 
-Don't worry about the code below, I will create a series of weights for our hypothetical bags. Right now, the things I do may be hard to follow, but they are not essential anyway.
+Don't worry about the code below, I will create a series of weights for our hypothetical bags. Right now, the things I do may be hard to follow, but they are not essential for this part of the activity.
 
 ```{r}
 # Setting the seed for random number generator so that examples stay consistent.
@@ -51,13 +51,13 @@ Similarly with the bottom observations
 tail(bagsOfOranges) # here I leave n parameter out, the default is 6 rows.
 ```
 
-If you recall Introduction to Statistical Computing Environments module's, Introduction learning activity, we discussed indexes as a way to access data in a data.frame.
+If you recall the Introduction to Statistical Computing Environments module's Introduction learning activity, we discussed indexes as a way to access data in a data.frame.
 
 Let us say we want to see only the weight column, there are a few ways to do that.
 
 ```{r}
 # Method 1
-bagsOfOranges[, 2] # second column, notice the position of comma.
+bagsOfOranges[, 2] # second column, notice the position of the comma.
 # Method 2
 bagsOfOranges[, "weight"] # with column name
 # Method 3
@@ -99,9 +99,9 @@ bagsOfOranges[c(3, 7), ]
 
 Think about what we just learned. This way you can see how your data looks and see specific parts of it.
 
-Let me tell you about a few useful functions, that are helpful in knowing more about your data.
+Let me tell you about a few useful functions that are helpful in knowing more about your data.
 
-Number of observations, use nrow() function for data.frame and length() function for vectors (each row is a vector).
+To see the number of observations, use the nrow() function for data.frames and the length() function for vectors (each row is a vector).
 
 ```{r}
 nrow(bagsOfOranges) # bagsOfOranges is a data.frame
@@ -126,7 +126,7 @@ Now a simple exercise for you. Can you make R spit out how many bags have more t
 
 If anyone asks you how much a bag of oranges weights, what would you say?
 
-You will give a figure based on your experience with the bags. This figure will most probably be the mean, or the average weight of bags. You can think the average as the simplest model one can fit the data. If you know next to nothing about other variables, the best you can do in a pinch is to report mean.
+You will give a figure based on your experience with the bags. This figure will most probably be the mean, or the average weight of bags. You can think of the average as the simplest model one can fit to the data. If you know next to nothing about other variables, the best you can do in a pinch is to report mean.
 
 In R you can get the average with the mean() function.
 
@@ -207,7 +207,7 @@ Oranges is pretty normally distributed with a small standard deviation, whereas 
 
 ### T Test
 
-I want to take a tiny segue here. If you want to compare two groups and to see if they are the same or not (Do men and women weight the same? Are business students and engineering students have similar SAT scores?) you can use a t test. In a normal distribution roughly 99.7% of observations will be 2 standard deviations away from the mean. Basically, a T test compares the mean values of each group and using standard deviations, it determines if they are indeed the same.
+I want to take a tiny segue here. If you want to compare two groups and to see if they are the same or not (Do men and women weight the same? Are business students and engineering students have similar SAT scores?) you can use a t test. In a normal distribution, roughly 99.7% of observations will be 2 standard deviations away from the mean. Basically, a T test compares the mean values of each group and uses the standard deviations to determine if they are indeed the same.
 
 
 ```{r}
@@ -266,7 +266,7 @@ library(psych)
 describe(mtcars)
 ```
 
-As you can see, beyond what is reported in summary, describe function also reports standard deviation and standard error. 
+As you can see, beyond what is reported in summary, the describe function also reports standard deviation and standard error. 
 
 You may notice skewness and kurtosis of the data. These are useful in estimating how far the distribution is from normal (bell curve). Skewness shows how far from symmetrical the distribution. Skewness for a normal distribution is zero, symmetrical data should have values close to zero. Kurtosis is the amount of data below the tails. The kurtosis for normal distribution is 0. The further from the normal, the more different the values will be.
 
@@ -307,7 +307,7 @@ Let us see a tabulation of Transmission type (Automatic = 0 and Manual = 1) by N
 table(mtcars[, c("am", "cyl")])
 ```
 
-Based on the data most cars with 8 cylinders come with automatic transmissions. For 4-cylinder cars, most of them are manual.
+Based on the data, most cars with 8 cylinders come with automatic transmissions. For 4-cylinder cars, most of them are manual.
 
 ## Solutions to Exercises
 
