@@ -45,7 +45,7 @@ Use the *str* function to provide an overview of data structure for *games*.
 
 ### Histogram
 
-Plot out the distribution of price variance in a histogram.
+Plot out the distribution of price variable in a histogram.
 
 ```{r}
 
