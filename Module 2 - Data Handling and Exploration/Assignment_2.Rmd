@@ -6,7 +6,7 @@ output:
   html_document: default
   pdf_document: default
 ---
-This is an assignment to evaluate your learning in module two. For each learning activity there is a section in this document. Answer each question below the question and create an R Markdown document for submission.
+This is an assignment to evaluate what we have learned in module two. For each learning activity there is a section in this document. Answer each question below the question and create an R Markdown document for submission.
 
 *For the rest of the exercises we will use games.csv in the data folder. Import the file into a data.frame called games to begin the exercise.*
 
@@ -29,13 +29,13 @@ Show the top 6 rows of *games*.
 
 ### Descriptive Statistics
 
-Use *summary* function to provide basic descriptive statistics for *games*.
+Use the *summary* function to provide basic descriptive statistics for *games*.
 
 ```{r}
 
 ```
 
-Use *str* function to provide an overview of data structure for *games*.
+Use the *str* function to provide an overview of data structure for *games*.
 
 ```{r}
 
@@ -45,7 +45,7 @@ Use *str* function to provide an overview of data structure for *games*.
 
 ### Histogram
 
-Plot out the distribution of price variable in a histogram.
+Plot out the distribution of price variance in a histogram.
 
 ```{r}
 
@@ -125,7 +125,7 @@ Show how many rows there are in games.
 
 ```
 
-Exclude any observations that are missing data on reviews column. Save the resulting data.frame in *games*
+Exclude any observations that are missing data on reviews column. Save the resulting data.frame in *games*.
 
 ```{r}
 
