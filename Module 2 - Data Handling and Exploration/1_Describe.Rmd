@@ -13,7 +13,7 @@ First order of business in any analytics task is to understand what we have in o
 
 ## Visual Inspection
 
-Let us think of an example. Let's say you have 30 bags full of oranges. While there is some difference in weights, they are more or less the same. 
+Let's think of an example. Let's say you have 30 bags full of oranges. While there is some difference in weights, they are more or less the same. 
 
 Don't worry about the code below, I will create a series of weights for our hypothetical bags. Right now, the things I do may be hard to follow, but they are not essential for this part of the activity.
 
@@ -153,7 +153,7 @@ mean(bagsOfOranges$weight)
 
 The two figures are pretty close to each other. Can we say that a bag of apples will weigh more or less the same as a bag of oranges?
 
-Not really. Mean is a simple model and is useful if the difference (variance) in bags is also similar between the groups. If there is great difference between weight of bags between two groups, mean is not very useful (as one bag can be .7 pounds and the next may be 3.4 pounds).
+Not really. Mean is a simple model and is useful if the difference (variance) in bags is also similar between the groups. If there is great difference between weights of the bags in the two groups, mean is not very useful (as one bag can be .7 pounds and the next may be 3.4 pounds).
 
 Let us learn how to figure out the difference. A common measure of difference is standard deviation (sd).
 
