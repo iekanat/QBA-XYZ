@@ -13,9 +13,9 @@ First order of business in any analytics task is to understand what we have in o
 
 ## Visual Inspection
 
-Let us think of an example. Let's say you have 30 bags full of orange; While there is some difference in weights, they are more or less the same. 
+Let us think of an example. Let's say you have 30 bags full of oranges. While there is some difference in weights, they are more or less the same. 
 
-Don't worry about the code below; I will create a series of weights for our hypothetical bags. Right now, the things I do may be hard to follow, but they are not essential for this part of the activity.
+Don't worry about the code below, I will create a series of weights for our hypothetical bags. Right now, the things I do may be hard to follow, but they are not essential for this part of the activity.
 
 ```{r}
 # Setting the seed for random number generator so that examples stay consistent.
@@ -136,7 +136,7 @@ mean(bagsOfOranges$weight)
 
 ## Standard Deviation
 
-I will now create a second batch of bags full of apples. Lets say the apples are not as uniform as oranges and they differ greatly in terms of weights. Don't worry much about this piece of code.
+I will now create a second batch of bags full of apples. Let us say the apples are not as uniform as oranges and they differ greatly in terms of weights. Don't worry much about this piece of code.
 
 ```{r}
 # Create a data frame
@@ -153,7 +153,7 @@ mean(bagsOfOranges$weight)
 
 The two figures are pretty close to each other. Can we say that a bag of apples will weigh more or less the same as a bag of oranges?
 
-Not really. Mean is a simple model and is useful if the difference (variance) in bags is also similar between the groups. If there is great difference between the weight of the bags in the two groups, mean is not very useful (as one bag can be .7 pounds and the next may be 3.4 pounds).
+Not really. Mean is a simple model and is useful if the difference (variance) in bags is also similar between the groups. If there is great difference between weight of bags between two groups, mean is not very useful (as one bag can be .7 pounds and the next may be 3.4 pounds).
 
 Let us learn how to figure out the difference. A common measure of difference is standard deviation (sd).
 
@@ -164,7 +164,7 @@ sd(bagsOfApples$weight)
 sd(bagsOfOranges$weight)
 ```
 
-You can see the difference between weight of Orange bags is much smaller than the difference between the weight of Apples.
+You can see the difference between weights of Orange bags is much smaller than the difference between the weights of Apples.
 
 Let's look into what this difference means visually. For now, do not worry too much about the code, you will learn how to visualize data in the following learning activity.
 
@@ -203,11 +203,11 @@ grid.arrange(p1, p2)
 
 Look at the above plots. These are called histograms, this histogram shows us how many bags were observed in a certain weight class. 
 
-Oranges is pretty normally distributed with a small standard deviation, whereas apples have a large standard deviation. Hence the mean value does not accurately compare apples and oranges as they are quite differently distributed.
+Oranges is pretty normally distributed with a small standard deviation, whereas apples have a large standard deviation. Hence the mean value does not quite work to compare apples and oranges as they are quite differently distributed.
 
 ### T Test
 
-I want to take a tiny segue here. If you want to compare two groups and to see if they are the same or not you can use a t test (Do men and women weight the same? Are business students and engineering students have similar SAT scores?). In a normal distribution, roughly 99.7% of observations will be 2 standard deviations away from the mean. Basically, a T test compares the mean values of each group and uses the standard deviations to determine if they are indeed the same.
+I want to take a tiny segue here. If you want to compare two groups and to see if they are the same or not (Do men and women weight the same? Are business students and engineering students have similar SAT scores?) you can use a t test. In a normal distribution, roughly 99.7% of observations will be 2 standard deviations away from the mean. Basically, a T test compares the mean values of each group and uses the standard deviations to determine if they are indeed the same.
 
 
 ```{r}
