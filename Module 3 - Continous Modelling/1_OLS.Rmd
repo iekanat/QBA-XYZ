@@ -35,7 +35,7 @@ As you get your hands on more data you can run correlations. For example you can
 
 How about making predictions based on what we know about fuel efficiency and engine volume? That would be the domain of regression.
 
-We can even go a step further to look at the joint effect of a number of variables on the dependent variable. We call these other variables *independent variables, x, or input variables . . .* Basically we estimate how these independent variables act together to shape the independent variable.
+We can even go a step further to look at the joint effect of a number of variables on the dependent variable. We call these other variables *independent variables, x, or input variables . . .* Basically we estimate how these independent variables act together to shape the dependent variable.
 
 # A Simple Example
 
@@ -70,19 +70,19 @@ Now let us move beyond the visual representation of this simple example and let 
 
 The formula for this model would be as follows:
 
-$y = \beta_0 + \beta_1 \times X_1 + \epsilon$
+y = \beta_0 + \beta_1 \times X_1 + \epsilon$
 
 Let us go over the terms: 
 
-* $y$ is the dependent variable. 
+* $y$ is the dependent variable.
 * $x_1$ is the independent variable.
 * $\beta_1$ is the coefficient of $x_1$.[^1]
-* $\beta_0$ is the intercept.
+* $\beta_0$ is the x-intercept. 
 * $\epsilon$ is the error in our estimation.
 
 [^1]: In a proper statistics text book $\beta_1$ would be used to refer to the true value of the coefficient and $b_1$ to refer to the estimate of the coefficient. In this material, I won't make the distinction as I believe it can get confusing for students.
 
-What this tells us is $y$ (mpg) is determined by $x_1$ (displacement) and some random error ($\epsilon$). So you take $x_1$, multiply it by $\beta_1$, add $\beta_0$ and you will get your best estimate of $y$. You do not touch the $\epsilon$ as epsilon is unknown, it is just allowed for in the model.
+What this tells us is $y$ (mpg) is determined by $x_1$ (displacement) and some random error ($\epsilon$). So you take $x_1$, multiply it by $\beta_1$, add $\beta_0$ and you will get your best estimate of $y$. You do not touch the $\epsilon$ as epsilon is unknown, it is just allowed for in the model. 
 
 Let us fit an ordinary least squares regression model to estimate gas milage based on displacement.
 
@@ -125,7 +125,9 @@ While people get overly excited and jump to coefficients, I recommend starting w
 
 This is an overall evaluation of the model compared to using just the mean value (sometimess referred to as null model). If your model is good, it needs to be at least better than just guessing the mean value anytime somebody asks you to guess the mpg of a car.
 
-Rule of thumb is look at the p value. You want p value to be really small[^3] (remember t tests?). So any p value below (.05) means your model is statistically significantly different than the null model.
+Rule of thumb is look at the p value. You want p value to be really small(remember t tests?). So any p value below (.05) means your model is statistically significantly different than the null model.
+
+
 
 ***$R^2$***
 
@@ -193,9 +195,15 @@ We can definitely fit more variables into the model. The new formula would look 
 
 $y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_n x_n + \epsilon$
 
-Let us assume that we are interested in the effect of displacement (disp), and weight (wt) on the fuel efficiency. The formula would be:
+Let us assume that we are interested in the effect of displacement (disp), and weight (wt) on the fuel efficiency. The formula would Change from
+
+$mpg = \beta_0 + \beta_1 \times disp + \epsilon$
+
+to
 
 $mpg = \beta_0 + \beta_1 \times disp + \beta_2 \times wt + \epsilon$
+
+# consider having the original here to help highlight the changes
 
 And the R code for the model with the three variables we have in mind would be:
 
