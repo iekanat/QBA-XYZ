@@ -209,7 +209,7 @@ Your predictions will not be harmed.
 
 You can drop the offending variables.
 
-Remember our discussion of fitting models of increasing complexity? The main reason is to be able to capture change in significance of variables due to multicollinearity. In case of interactions for example, we often don't worry much. If a main effect turns insignificant, we would say the main effect was mediated by the interaction.
+Remember our discussion of fitting models of increasing complexity? The main reason is to be able to capture change in significance of variables due to multicollinearity. In case of interactions for example, we often don't worry much. If a main effect turns insignificant, we would say the main effect was mediated by the interaction. We do not drop the insignificant main variables,
 
 # Autocorrelation
 
