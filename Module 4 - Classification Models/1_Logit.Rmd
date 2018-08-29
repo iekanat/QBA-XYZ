@@ -331,15 +331,15 @@ R offers many alternatives in estimating multinomial logit models. I prefer mlog
 You will notice the overkill aspect of mlogit package in the function call. Don't worry too much about parameters that are not immediately apparent.
 
 ```{r}
-games_mlgt_0 <- mlogit(status ~ 0 | avgMin + multi, data = games, choice = "status", shape = "wide")
+games_mlgt_0 <- mlogit(status ~ avgMin + multi | 0 | 0, data = games, choice = "status", shape = "wide")
 ```
 
 Let us break down the function call here:
 
-    games_mlgt_0 <- mlogit(status ~ 0 | avgMin + multi, data = games, choice = "status", shape = "wide")
+    games_mlgt_0 <- mlogit(status ~  avgMin + multi | 0 | 0, data = games, choice = "status", shape = "wide")
 
 1. games_mlgt_0 <- : store the estimation results in a variable called games_mglt_0
-2. mlogit(status ~ 0 | avgMin + multi, data = games, choice = "status", shape = "wide")
+2. mlogit(status ~ avgMin + multi | 0 | 0, data = games, choice = "status", shape = "wide")
     + status ~ 0 | avgMin + multi : formula saying estimate *status* based on *avgMin* and *multi*. The 0 | specifies that there are no alternative specific variables (don't worry).
     + data = games : where to find the variables.
     + choice = "status", shape = "wide": Telling mlogit package about data structure.
