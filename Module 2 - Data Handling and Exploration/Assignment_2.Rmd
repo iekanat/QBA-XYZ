@@ -10,7 +10,7 @@ This is an assignment to evaluate what we have learned in module two. For each l
 
 *For the rest of the exercises we will use games.csv in the data folder. Import the file into a data.frame called games to begin the exercise.*
 
-```{r}
+```{r setup}
 # Import necessary packages
 
 # Import games.csv from data folder
