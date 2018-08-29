@@ -31,6 +31,8 @@ This module's module is made up of X learning activitites listed below. **BEFORE
 
 5 - Fixed Effects Regression [PDF](5_Fixed_Effects.pdf), [HTMl](5_Fixed_Effects.html), [Rmd](5_Fixed_Effects.Rmd), [Video](): Fixed effects regression.
 
+6 - Regression Trees [PDF](6_RegressionTrees.pdf), [HTML](6_RegressionTrees.HTML), [Rmd](6_RegressionTrees.Rmd), [Video](): Regression trees.
+
 
 [Download Zip Archive for This Module's Learning Activities](Module_3.zip)
 
