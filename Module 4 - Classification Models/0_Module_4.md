@@ -15,17 +15,18 @@ In the previous modules we learned the linear regression in R. In this module we
 
 This module we will build upon some functionality we learned in Module 3 so it may be a good idea to refresh your memory.
 
+
 There will be certain things you won't know from the start. Unless they prevent you from progressing, note them down and keep progressing. Most of it will become clear as you work through it. For the questions that you still are unclear about in the end, you can ask me during our virtual office hours.
 
 This module's module is made up of X learning activitites listed below. **BEFORE YOU START THE FOLLOWING ACTIVITIES, CREATE A PROJECT FOLDER FOR THIS MODULE AS DESCRIBED IN FIRST MODULE'S INTRODUCTION LEARNING ACTIVITY**.
 
 ##Learning Activities
 
-1 - Logistic Regression / Multinomial Regression [PDF](.pdf), [HTMl](.html), [Rmd](.Rmd), [Video]():
+1 - Logistic Regression & Multinomial Regression [PDF](.pdf), [HTMl](.html), [Rmd](.Rmd), [Video]():
 
-2 - Regression Trees [PDF](.pdf), [HTMl](.html), [Rmd](.Rmd), [Video]():
+2 - Classification Trees [PDF](.pdf), [HTMl](.html), [Rmd](.Rmd), [Video]():
 
-3 - Support Vector Machines [PDF](.pdf), [HTMl](.html), [Rmd](.Rmd), [Video]():
+3 - Neural Networks [PDF](.pdf), [HTMl](.html), [Rmd](.Rmd), [Video]():
 
 
 [Download Zip Archive for This Module's Learning Activities](Module_3.zip)
