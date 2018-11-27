@@ -1,0 +1,19 @@
+---
+title: "Model Validation"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+```
+
+So far we have fitted various models and evaluated their performance using a number of metrics such as RMSE, AIC, BIC, Sensitivity... So far, we fit the model and evaluated its performance on the same dataset. This is perfectly acceptable if you have no intention to use the model for predictions on out sample data. This is the approach used in most scientific studies. For practical purposes however, the prediction out of sample is often the sole purpose of fiting the model in the first place.
+
+In this learning activity we will start with how to conduct validation for predictive modeling using various methods.
+
+
+## Training, Testing, Validation...
+
+The main problem with fitting and evaluating the model performance on a single dataset is that you have no way of knowing the performance of the model in new data. This is a real concern considering the overfitting problem. With any modeling approach we learned thus far, there is the risk of overfitting. An overfitted model may adopt to the idiosyncracies of the sample dataset so well that it may not perform well for out sample data. Using only metrics from one dataset, we may not be able to detect overfitted models.
+
+One way to adress this problem is to split the data to enable testing of model performance. Say we use only 70% of the data to train the model and use the rest of the data to test its performance. We need a way to split the data into two groups.
