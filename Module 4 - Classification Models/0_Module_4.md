@@ -11,14 +11,14 @@ urlcolor: blue
 
 Welcome to QBAXXX, Module 4. 
 
-In the previous modules we learned the linear regression in R. In this module we will pick up where we left off in module 3 and learn how to fit various models for categorical dependent variables. 
+In the previous modules we learned how to implement some continuous models in R. In this module we will pick up where we left off in module 3 and learn how to fit various models for categorical dependent variables. 
 
 This module we will build upon some functionality we learned in Module 3 so it may be a good idea to refresh your memory.
 
 
 There will be certain things you won't know from the start. Unless they prevent you from progressing, note them down and keep progressing. Most of it will become clear as you work through it. For the questions that you still are unclear about in the end, you can ask me during our virtual office hours.
 
-This module's module is made up of X learning activitites listed below. **BEFORE YOU START THE FOLLOWING ACTIVITIES, CREATE A PROJECT FOLDER FOR THIS MODULE AS DESCRIBED IN FIRST MODULE'S INTRODUCTION LEARNING ACTIVITY**.
+This module's module is made up of 3 learning activitites listed below. **BEFORE YOU START THE FOLLOWING ACTIVITIES, CREATE A PROJECT FOLDER FOR THIS MODULE AS DESCRIBED IN FIRST MODULE'S INTRODUCTION LEARNING ACTIVITY**.
 
 ##Learning Activities
 
@@ -33,4 +33,4 @@ This module's module is made up of X learning activitites listed below. **BEFORE
 
 ##Evaluation
 
-[Assignment 3](Assignment_3.Rmd)
+[Assignment 4](Assignment_4.Rmd)

@@ -1,0 +1,344 @@
+---
+title: "Neural Networks"
+author: "Irfan Kanat"
+date: "September 27, 2018"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup}
+library(psych) # Just for the sake of describe() function
+library(neuralnet) # The workhorse of this activity
+library(ggplot2) # To draw nicer plots
+library(gridExtra) # To arrange multiple plots in a panel
+library(pROC) # To plot the ROC curve
+library(caret) # For so many things... But here it is for confusion matrix
+set.seed(5096) # For reproducibility
+```
+
+## Neural Networks
+
+Neural networks (NN), like regression trees can be used for both continuous and categorical dependent variables with minor tweaks. Here we will discuss the neural networks over a continuous example. One nice thing about a neural net is that it fits a much broader range of data. Regressions generally assume a linear mechanism producing the results. With a neural net, we are freed of these kinds of assumptions. In fact, NN are called universal function approximators for this.
+
+While this may sound exciting, the NN have a significant downside. Their structure is not very conducive to interpretation. Which is why they are sometimes referred to as a black box. We observe the inputs and outputs, but we can not really use the relations between nodes to explain how NN reached the outcome the way we do with regression coefficients. In that sense, NN are good for prediction, but not for explanation. So unless your data is produced by a non-linear mechanism, it can still be preferable to use a linear model as opposed to the computationally more demanding NN.
+
+Here is roughly how it works. The Neural Networks are inspired by the workings of a brain. A series of simple nodes (neurons) are connected to each other. While each node handles a specific function, combined together a network of nodes can identify if something is round or not for example. Combine enough of them and you can play ping pong.
+
+The simplest example of a neural network is a network with one layer and one node. This specific configuration is called a perceptron.
+
+![Perceptron](figures/perceptron.png)
+
+The perceptron takes an inputs (x) and a bias modifier. These inputs through an activation function (essentially each node does something to inputs. You can think of it as a simple transformation) if the activation function output meets a certain threshold, the neuron will "fire" or activate. If the neuron fires, the result of activation function is outputted.
+
+Essentially perceptron has a series of inputs ($x$), weights($w$), a bias ($b$), an activation function ($g$), and a threshold.
+
+$g(w_1x_1+w_2x_2+ \ldots + w_nx_n + b)$
+
+I will use an example to explain what an activation function ($g$) is. A popular activation function is called rectified linear unit (reLU), essentially as long as the sum of weighted inputs and bias is below 0, the reLU will return 0, if the sums are greater than 0 it will return whatever the sum is.
+
+In this example, the threshold is 0. If sum is greater than 0, the node activates, else returns 0. 
+
+Remember the bias is added to inputs. You can think of it as the intercept in a regression. Essentially, it alters the behavior of the threshold. In reLU for example, a high bias may lead to easier activation.
+
+While every node receives multiple inputs, yet not all inputs are treated equally. The neural network assigns and adjusts weights ($w$) to each source of input to maximize accuracy. You can see from above example, the weights can alter the effect of each input on the activation. They are in that sense similar to regression coefficients.
+
+A perceptron is a single neuron, ideally we want a network of neurons.
+
+![Neural Network](figures/neuralNet.png)
+
+Above is an example of a feed forward neural network. Each node in the network is connected to all the nodes in the next layer over. The nodes that are activated pass on their output to all the nodes in the next layer, hence creating a feed forward structure. We know the inputs and outputs, yet what happens in between is not our concern (remember the black box), which is why we call them the hidden layers. Given enough hidden layers a NN can estimate quite complex relations.
+
+We have explained the role of an activation function in a perceptron (single neuron) above. Now imagine many different neurons with many different activation functions. That is what a NN is.
+
+You know what feedforward stands for, here is another term for you: back propagation. Essentially the error in the output layer (difference between prediction and reality) is shared between nodes in the previous layer which in turn push a share of errors to the previous layer. Depending on these errors received, each node alters the biases, and weights.
+
+Here is a little exercise for you. Google has devised the perfect tool to understand what a NN does. Check out the [Neural Network Playground](http://playground.tensorflow.org) to understand how a neural network works. 
+
+NN is thick with terminology and we can surely loose ourselves in it. I prefer to keep things more practical. Let us move on to an example and you can learn the more advanced topic as you need them later on.
+
+## Titanic Survival Data
+
+We will be using the Titanic dataset from the Titanic package. Data was part of a kaggle competition a while back. Install the package as usual, and it shall be loaded in as a library.
+
+Import the dataset.
+
+```{r}
+titanic <- titanic::titanic_train
+```
+
+The variables we care about are: 
+
+Survived: Binary, 1 for survival
+
+PassengerId: unique identifier for passenger
+
+Pclass: Class of the passenger, first class, second class, and so on...
+
+Name: Passenger name
+
+Sex: Gender
+
+Age: Age
+
+SibSp: Number of siblings/spouses aboard
+
+Parch: Number of parents/children aboard
+
+Ticket: Ticket number
+
+Fare: Passenger Fare
+
+Cabin: Cabin
+
+Embarked: Port of embarkation.
+
+I recommend you take a look at the data as discussed in Module 2.
+
+## Preprocessing
+
+When the dataset is not standardized, NN can have difficulty converging. It is standard practice at this point to standardize inputs. Let us take care of that. You may remember this from Module 2, Activity 5 Transformations.
+
+```{r}
+# There are both continuous and categorical variables in this dataset. You can't standardize categorical.
+# Create a list of columns that should be factors
+factorColumns <- c("Survived", "Pclass", "Sex", "Name",  "Ticket", "Cabin", "Embarked")
+notFactorColumns <- !(colnames(titanic) %in% factorColumns)
+titanicStd <- data.frame(titanic[,factorColumns], scale(titanic[,notFactorColumns]))
+# See the effect of standardization on non factors
+describe(titanicStd[,9:12])
+# See the whole set
+str(titanicStd)
+```
+
+The dataset does not declare some variables as factors, while most packages would deal with this just fine, neural network packages in R are a bit picky. Let us turn these variables into factors.
+
+```{r}
+# Feed the list of Factors to lapply, to turn these into factors
+titanicStd[,factorColumns] <- lapply(titanicStd[,factorColumns], as.factor)
+# See the results
+str(titanicStd)
+```
+Compare the outputs of the str function and see the results. Let us inspect what we did with that lapply call:
+
+1. titanicStd[,factorColumns] <-: assigns lapply results to titanicStd data.frame's factor columns
+2. lapply(titanicStd[,factorColumns], as.factor): calls lapply function with two parameters
+  + titanicStd[,factorColumns]: a set of columns to apply a function over
+  + as.factor: the function being applied to above set of columns
+
+lapply is a nice function to know. It can save you from writing inefficient for loops. Essentially it applies a function to everything given to it in a list. In this case lapply takes the factor columns from titanicStd and converts them to factor versions of themselves.
+
+Categorical variables require some additional processing. Normally R functions handle categorical variables declared as factors just fine, yet both nnet and neural net packages require you to take an additional step or two. Essentially we need to convert our factors to sets of dummy variables (sometimes also called binary coding or indicator variables). Neural net package has a model.matrix function to automate the coding.
+
+```{r}
+titanicStdMM <- model.matrix(~ Survived + Pclass + Sex + Age , titanicStd) 
+```
+
+Let us break the function call down:
+
+1. titanicStdMM <-: Assign model.matrix results to titanicStdMM
+2. model.matrix(~ Survived + Pclass + Sex + Age, titanicStd)
+  + ~ Survived + Pclass + Sex + Age: declare variables to be included in the matrix
+  + titanicStd: where the variables come from
+  
+```{r}
+head(titanicStdMM)
+```
+  
+Essentially this creates a new dataset in the form of a matrix. We could have used ~ . to declare all variables to be included, but certain factors like name and ticket have too many levels and they don't add any particular value to the model. Hence I went with the subset above. 
+
+The binary variables (Survived, and Sex) are now **renamed** as SurvivedTRUE and Sexmale. If SurvivedTRUE == 0, then passenger did not survive.
+
+The variable with three levels (Passenger Class) however now has two binary variables. If Pclass2 == 1, then passenger was traveling second class. If Pclass3 ==1, then the passenger was in third class. What about first class? If Pclass2 == 0 and Pclass3 == 0, then the passenger was first clas.
+
+A rule of thumb for dummy coding: however many levels you have (let us say n), you need one less (n-1) binary indicators to be able to capture the same information in a set of binary indicators.
+
+
+## Analysis
+
+Our whole goal is prediction. We do not care about theory at this point. This time I restricted the number of variables as some variables are clearly useless (name or ticket number).
+
+```{r}
+titanicStdMM_nn_0 <- neuralnet(SurvivedTRUE ~ Age + Sexmale + Pclass2 + Pclass3, data = titanicStdMM, hidden = c(3,3), linear.output = FALSE)
+```
+
+Here is how neural net package parameters have changed since we fit the continuous model.
+
+1. SurvivedTRUE ~ Age + Sexmale + Pclass2 + Pclass3: Is the formula, inputs and output we used the names created by model matrix.
+2. data = titanicStdMM: where the data comes from.
+3. hidden: Number of hidden neurons in each layer. hidden = 4 is a single layer with four nodes, hidden = c(4,4) is two layers with four neurons each.
+4. linear.output = F: Specifying a categorical output.
+
+
+```{r}
+plot(titanicStdMM_nn_0)
+```
+
+That looks like quite a mess. Good thing we won't really do anything with that plot. Unlike linear regression where the coefficients are interpreted, in NN the weights or biases are not interpreted. Due to its predictive nature, all we care about in a NN is predictive accuracy. 
+
+*Unless we cover training, testing and cross validation your understanding of predictive models especially on the machine learning side will be incomplete. I am saving this topic for Module 5, Automated Training, where we will cover it in great detail. Some of the methods we demonstrate below may look inconvenient, that is because performance of a predictive model is rarely evaluated on just one dataset. Learn what is shown below and we will build on top of these concepts in Module 5.*
+
+One measure of accuracy is the error (difference between predicted and observed values) of the model. Ideally we want error to be low.
+
+```{r}
+titanicStdMM_nn_0$result.matrix['error',]
+```
+
+You may have already noticed but the fitted models are much like any other data structure in R. We can access parts of it like calling a column in a data.frame. Above what we are doing is, extracting the error of the model.
+
+Here is a simple exercise for you, fit a neural network with different hidden layer structure and compare the error to what we found above. Comment on which model to use.
+
+Another thing we may want to do is check out predicted values and compare them to actual observations. Unlike its continous cousin, we can't just use the net.result as it is. Net result is a probability score that indicates the probability of passenger surviving. We need to convert the probability into a prediction.
+
+The scores give us an indication, but we need to make a decision on where to draw the line. Such as if you scored lower than this you did not survive... For this we use *prevalence*. Essentially the likelihood of survival among passengers. For now let us keep it simple and say, if you scored above .5, you survived and you died if you scored below .5.
+
+```{r}
+# Creating a new dataframe 
+# and storing predicted values from the NN and actuals from data
+titanicPredictedActual <- data.frame(predicted = titanicStdMM_nn_0$net.result[[1]], actual = titanicStdMM[,'SurvivedTRUE']) # NN stores probabilities
+# Let us see how the net.result looks.
+head(titanicPredictedActual)
+# With .5 cut off
+titanicPredictedActual$predicted <- as.numeric(titanicPredictedActual$predicted > .5)
+titanicConfusionMatrix_0 <- table(titanicPredictedActual)
+titanicConfusionMatrix_0
+```
+
+This table is what is generally known as a confusion matrix. Rows are what you predicted, columns are what was actually observed. 
+
+For the cases you predicted survival (predicted = 1) with this model. You were correct `r titanicConfusionMatrix_0[4]` (True Positives) times out of `r sum(titanicConfusionMatrix_0[c(2,4)])` (True Positives + False Positives) when you predicted survival. 
+
+Likewise for when you predicted death (predicted = 0) and the passenger actually died (actual = 0). Then you made a correct prediction. In fact you were correct `r titanicConfusionMatrix_0[1]` (True Negatives) times out of `r sum( titanicConfusionMatrix_0[c(1,3)])` (True Negatives + False Negatives) when you predicted death. 
+
+You can calculate various measures of prediction accuracy from the confusion matrix.
+
+Accuracy is overall success rate. (True Positives + True Negatives / Total)  = `r sum(titanicConfusionMatrix_0[c(1,4)]) / sum(titanicConfusionMatrix_0)`
+
+Misclassification rate oposite of accuracy. (False Positive + False Negative / Total) = `r sum(titanicConfusionMatrix_0[c(2,3)]) / sum(titanicConfusionMatrix_0)`
+
+Sensitivity ability to predict positives. (True Positive / Positive) = `r titanicConfusionMatrix_0[4] / sum(titanicConfusionMatrix_0[c(3,4)])`
+
+Specificity ability to predict negatives. (True Negative / Negative) = `r titanicConfusionMatrix_0[1] / sum(titanicConfusionMatrix_0[c(1,2)]) `
+
+There are even more ways to measure model performance (refer to confusionMatrix documentation). Which one to use will depend on the needs for the model. If you are trying to target coupons for a marketing campaign Sensitivty may become more important. Whereas if this is a medical diagnostic, specificity may suddenly become more critical.
+
+Here is how you would calculate all that and more with confusionMatrix function from carret package. It produces all of the above and more.
+
+```{r}
+confusionMatrix(titanicConfusionMatrix_0)
+```
+Here is a simple exercise for you. Calculate the confusion matrix for the neural net you fit earlier. Compare against this model. Comment on which model is a better fit.
+
+One way to visualize model performance is ROC curves. Here is how you would plot one:
+
+```{r}
+# We need the raw prediction scores.
+titanicPredictedActual <- data.frame(predicted = titanicStdMM_nn_0$net.result[[1]], actual = titanicStdMM[,'SurvivedTRUE'])
+# We use roc() function from pROC package
+roc(predictor = titanicPredictedActual$predicted, response = titanicPredictedActual$actual)
+# We can also get a plot out of this
+plot(roc(predictor = titanicPredictedActual$predicted, response = titanicPredictedActual$actual))
+```
+
+
+In a good model both specificity and sensitivity are high. According to this, the best place for a model is the top left corner where both specificity and sensitivity are equal to 1. If this is the case, the area under the ROC curve is maximized. Then, what we want is a curve as close to that top left corner as it can get. In other words, better models have larger areas under ROC curve.
+
+Here is a simple exercise for you. Plot the ROC curve for the neural net you fit earlier. Compare against this model. Comment on which model is a better fit.
+
+
+
+## Predictions with NN
+
+The goal in any NN model is making predictions on new data. Unlike other models we have seen thus far, neural net package's neural networks don't support predict function. Instead we use compute.
+
+```{r}
+# I am creating a new dataset to predict.
+# This dataset will have two rows full of information
+newTitanicStdMMData <- data.frame( Pclass2 = c(0,0), Pclass3 = c(0,1), Age = c(-0.5, 0.5), Sexmale = c(1, 0))
+# Predict
+compute(titanicStdMM_nn_0, newTitanicStdMMData)$net.result
+```
+So we see that young (Age = -0.5) male (Sexmale = 1) first class (Pclass2 = 0, Pclass3 = 0) passenger will almost definitely survive, while the older female passenger from third class will almost certainly perish.
+
+Here is a simple exercise for you. Try it with other passenger profiles see how they effect the outcome.
+
+## Final Note
+
+This activity was designed to serve as a primer to Neural Networks. While this much is sufficient to start with, there is so much more to learn about neural networks. I encourage students to research on other types of activation functions, and network structures to achieve a more complete picture.
+
+## Solutions to Exercises
+
+1 - Here is a little exercise for you. Google has devised the perfect tool to understand what a NN does. Check out the [Neural Network Playground](http://playground.tensorflow.org) to understand how a neural network works. 
+
+I trust you all went to NN playground. We are all outstanding citizens here after all. 
+
+2 - Here is a simple exercise for you, fit a neural network with different hidden layer structure and compare the error to what we found above. Comment on which model to use.
+
+```{r}
+# One layer 3 nodes
+titanicStdMM_nn_0b <-  neuralnet(SurvivedTRUE ~ Age + Sexmale + Pclass2 + Pclass3, data = titanicStdMM, hidden = 3, linear.output = FALSE)
+# Old model error
+titanicStdMM_nn_0$result.matrix['error',]
+# New model error
+titanicStdMM_nn_0b$result.matrix['error',]
+```
+
+The error with the one layer, three node model is greater than the error of model with two layers with 3 nodes each. From a purely error based point of view, we would prefer the more complex neural network.
+
+3 - Here is a simple exercise for you. Calculate the confusion matrix for the neural net you fit earlier. Compare against this model. Comment on which model is a better fit.
+
+```{r}
+# Create a new dataset to plot
+titanicPredictedActual2 <- data.frame(predicted = titanicStdMM_nn_0b$net.result, actual = titanicStdMM[,'SurvivedTRUE']) 
+colnames(titanicPredictedActual2) <- c('predicted', 'actual')
+
+# Convert from probability to class prediction
+titanicPredictedActual2$predicted <- as.numeric(titanicPredictedActual2$predicted > .5)
+
+# Compare two confusion matrixes.
+# Old Model
+confusionMatrix(titanicConfusionMatrix_0)
+# New Model
+confusionMatrix(table(titanicPredictedActual2))
+```
+
+The model is better able to predict negatives (sensitivity) but worse at predicting positives (specificity). The model to use will depend on purposes of the model.
+
+4 - Here is a simple exercise for you. Plot the ROC curve for the neural net you fit earlier. Compare against this model. Comment on which model is a better fit.
+
+```{r}
+# We need the raw prediction scores.
+titanicPredictedActual <- data.frame(predicted = titanicStdMM_nn_0$net.result[[1]], actual = titanicStdMM[,'SurvivedTRUE'])
+titanicPredictedActual2 <- data.frame(predicted = titanicStdMM_nn_0b$net.result[[1]], actual = titanicStdMM[,'SurvivedTRUE'])
+# We use roc() function from pROC package
+roc(predictor = titanicPredictedActual$predicted, response = titanicPredictedActual$actual)
+roc(predictor = titanicPredictedActual2$predicted, response = titanicPredictedActual2$actual)
+# We can also get a plot out of this
+plot(roc(predictor = titanicPredictedActual$predicted, response = titanicPredictedActual$actual))
+plot(roc(predictor = titanicPredictedActual2$predicted, response = titanicPredictedActual2$actual))
+```
+There are minor differences between teh models, one has slightly larger area under the curve than the other. In my opinion the difference is really miniscule and likely specific to this dataset. I would use either model from ROC curve perspective.
+
+5 - Here is a simple exercise for you. Try it with other passenger profiles see how they effect the outcome.
+
+```{r}
+# Mean is 0 (standardized)
+# For factors, 0 is baseline
+# I will keep all variables at 0 and alter one variable at a time.
+# When all variables are at 0 (baseline) the passenger is first class mean-aged female
+newTitanicStdMMData2 <- data.frame( Pclass2 = c(0,1,0,0,0), Pclass3 = c(0,0,1,0,0), Age = c(0,0,0,0,1), Sexmale = c(0,0,0,1,0))
+# Predict
+newTitanicStdMMData2$predictedSurvivalP <- compute(titanicStdMM_nn_0, newTitanicStdMMData2)$net.result
+# View Results
+newTitanicStdMMData2
+```
+
+You can see that the predicted survial probability for baseline passenger (first class, mean age, female) is `r round(newTitanicStdMMData2$predictedSurvivalP[1], digits = 2)`. We compare all others to this baseline.
+
+Going from first class to second class causes the predicted probability to go to `r round(newTitanicStdMMData2$predictedSurvivalP[2], digits = 2)`.
+
+Going from first class to third class causes the predicted probability to go to `r round(newTitanicStdMMData2$predictedSurvivalP[3], digits = 2)`. A significant decrease. Which means, being poor was not a good thing on Titanic.
+
+Going from female to male leads to probability going to `r round(newTitanicStdMMData2$predictedSurvivalP[4], digits = 2)`. Which means, women were really given priority in evacuation.
+
+Finally going from the middle of the pack in terms of age to 1 standard deviation above the mean, will lead to probability going to `r round(newTitanicStdMMData2$predictedSurvivalP[5], digits = 2)`.

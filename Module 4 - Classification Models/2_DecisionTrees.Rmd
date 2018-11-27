@@ -27,7 +27,7 @@ Let us see how this works over an example:
 
 ## EPA Vehicle Data
 
-We will be using the EPA vehicle data for this exercise. The data can be found in [EPA datasets online](https://www.fueleconomy.gov/feg/download.shtml). I have taken the liberty of reducing the number of variables and observations. So if you independently download the dataset you might find more variables.
+We will be using the EPA vehicle data for this exercise. The data can be found in [EPA datasets online](https://www.fueleconomy.gov/feg/download.shtml). I downloaded the data in first quarter of 2018. They may have updated the dataset since then. I have taken the liberty of reducing the number of variables and observations. So if you independently download the dataset you might find more variables.
 
 Import the dataset.
 
@@ -38,24 +38,40 @@ vehicles <- read.csv("data/vehiclesSub.csv")
 The variables we care about are: 
 
 VClass: Vehicle class, our dependent variable. 
-barrels08: Yearly fuel consumption in barrels.
-city08: City MPG
-highway08: Highway MPG
-comb08: Combined MGP
-co2TailpipeGpm: Tailpipe CO2 in grams/mile
-cylinders: Engine cylinders.
-displ: Engine displacement in liters.
-drive: Drive axle type
-fuelCost08: Annual fuel cost in dollars.
-fuelType: Fuel type.
-id: Record ID.
-make: Manufacturer.
-model: Model name.
-pv2: 2 door passenger volume.
-pv4: 4 door passenger volume.
-trany: Transmission.
-year: Year.
 
+barrels08: Yearly fuel consumption in barrels.
+
+city08: City MPG
+
+highway08: Highway MPG
+
+comb08: Combined MGP
+
+co2TailpipeGpm: Tailpipe CO2 in grams/mile
+
+cylinders: Engine cylinders.
+
+displ: Engine displacement in liters.
+
+drive: Drive axle type
+
+fuelCost08: Annual fuel cost in dollars.
+
+fuelType: Fuel type.
+
+id: Record ID.
+
+make: Manufacturer.
+
+model: Model name.
+
+pv2: 2 door passenger volume.
+
+pv4: 4 door passenger volume.
+
+trany: Transmission.
+
+year: Year.
 
 
 ## Analysis
