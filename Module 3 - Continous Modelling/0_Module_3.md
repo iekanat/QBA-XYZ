@@ -31,7 +31,11 @@ This module's module is made up of X learning activitites listed below. **BEFORE
 
 5 - Fixed Effects Regression [PDF](5_Fixed_Effects.pdf), [HTMl](5_Fixed_Effects.html), [Rmd](5_Fixed_Effects.Rmd), [Video](): Fixed effects regression.
 
-6 - Regression Trees [PDF](6_RegressionTrees.pdf), [HTML](6_RegressionTrees.HTML), [Rmd](6_RegressionTrees.Rmd), [Video](): Regression trees.
+6 - Regression Trees [PDF](6_RegressionTrees.pdf), [HTML](6_RegressionTrees.HTML), [Rmd](6_RegressionTrees.Rmd), [Video](): Regression trees for continuous dependent variables.
+
+7 - Neural Networks [PDF](7_NeuralNets.pdf), [HTML](7_NeuralNets.HTML), [Rmd](7_NeuralNets.Rmd), [Video](): Neural networks for continous dependent variables.
+
+
 
 
 [Download Zip Archive for This Module's Learning Activities](Module_3.zip)

@@ -8,26 +8,26 @@ output: html_document
 ```{r setup, include=F}
 library(rpart) # For trees
 library(rpart.plot) # For drawing nicer trees
-set.seed(256) # Reproducability
+set.seed(256) # Reproducibility
 # CERTAIN OPERATIONS HERE ARE A BIT RANDOM
 # DEPENDING ON THE SEED AND THE ORDER OF EXECUTION RESULTS CAN CHANGE A BIT
 ```
 
-# Regression Trees
+## Regression Trees
 
 The multiple regression is great if you can capture the data generating mechanism with a global model. A global model applies to the whole of the data. If you believe certain bits of data are generated with a different process (e.g. Luxury condos have a different slope for square footage), the model starts getting complicated. You would have to introduce interaction terms to take into account these differences. For a limited number of variables this is easy to do, it gets complicated real fast once the number of variables start growing. If you are not married to the idea of a global model, and are more interested in prediction then you can use a regression tree.
 
-You can think of it as partitioning the dataset into smaller subsets. Smaller, well behaved subsets for which we can fit simple models. Once you start going in this direction, you can see that the partitioning is similar to the [20 questions game](http://www.20q.net/). The questions can be thought of as branches in a tree. Each question determines which branch you will be following. By following the branches, you will eventually come to a leaf. For the leaf (subset of data) we will fit a simple model (like the mean) and get a result.
+You can think of it as partitioning the dataset into smaller subsets. Smaller, well behaved subsets for which we can fit simple models. Once you start going in this direction, you can see that the partitioning is similar to the [20 questions game](http://www.20q.net/). The questions can be thought of as branches in a tree. Each question determines which branch you will be following. By following the branches, you will eventually come to a leaf. For the leaf (subset of data) we will fit a simple model and get a result.
 
 ![](figures/Q20.png)
 
-Obviously the order of questions matter. If you were to ask "Is it white" as the first question the resulting split may have been much less effective than asking if it is an animal or a vegetable. What the algorithm does is find the most significant predictor for a split at each brand and split the data based on that predictor. So you can gather the importance of variables by their position on the tree.
+Obviously the order of questions matter. If you were to ask "Is it white" as the first question the resulting split may have been much less effective than asking if it is an animal or a vegetable. What the algorithm does is find the most significant predictor for a split at each branch and split the data based on that predictor. So you can gather the importance of variables by their position on the tree.
 
 A regression tree works in a similar fashion, each question would be about the value of an independent variable. Based on values of independent values we will drill down further and create a manageable subset for which a simple model (such as the mean) would fit.
 
-There are certain advanteges to a regression tree model. It is often easier for humans to make sense of than an equivalent regression model. Trees may fit certain datasets better depending on how the mechanism creating the data works. The algorithms used are computationally simple and efficient.
+There are certain advantages to a regression tree model. It is often easier for humans to make sense of than an equivalent regression model. Trees may fit certain datasets better depending on how the mechanism creating the data works. The algorithms used are computationally simple and efficient. 
 
-Let us see how this works over an example:
+While we discuss Regression Trees in two separate activities in continuous and categorical models, there is nothing inherent in the model that makes it one or the other. Regression trees can be used for either kind of analysis with minimal changes.
 
 ## UCLA Housing Data
 
@@ -84,7 +84,7 @@ Here is a simple exercise, try and fit a more complex tree by including more var
 
 ## Pruning the Tree
 
-What I hope you can quickly see upon inspection is that such a tree would defeat the purpose of fitting a regression tree. (1) It would be quite complex (especially considering we are using just three independent variables), so it is not easier to understand or to explain. (2) It is most likely overfitted. That means while it would explain this dataset very well but, it will not be as useful in explaining future datasets.
+What I hope you can quickly see upon inspection is that such a tree would be quite large. (1) It would be more complex, so it is not the easiest to understand or to explain. (2) It is most likely overfitted. That means while it would explain this dataset very well but, it will not be as useful in explaining future datasets.
 
 We need to prune the tree for it to be useful beyond this dataset. For each branch we add, we are adding complexity to the model. The idea is to stop at the point where the added complexity does not justify the added explanatory power. We determine the number of splits using a cp (complexity parameter) table such as the one below:
 
