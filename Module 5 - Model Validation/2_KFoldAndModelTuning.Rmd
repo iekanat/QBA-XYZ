@@ -1,0 +1,117 @@
+---
+title: "Model Tuning and Validation"
+author: "Irfan Kanat"
+date: "November 28, 2018"
+output: html_document
+---
+
+```{r setup}
+library(caret)
+library(rpart)
+library(rpart.plot)
+set.seed(2048)
+```
+
+## K Fold Cross Validation
+
+Spliting the dataset into a training and testing samples is a straight forward idea. Yet there is still one problem. What if the model performance we observed is due to idiosyncracies of the split? What if a different split could have produced a different outcome? Furthermore, you are giving up on possibly valuable sample size by not using the testing set in training and vice versa.
+
+One way to handle this problem is to conduct more splits and train-test the model multiple times on these. Generally this method is called K Fold Cross Validation (K stands for a number, typically 10). That means you make K splits and train and test the dataset on these splits.
+
+Often you would split the data into K parts, and hold one part out as a test set and train the model on the rest of the data. Then repeat until each part is used as a test sample. So if you split your data into 10 (K = 10), then you run 10 cross validations. Each subset is used 9 (K-1) times to train, and 1 times to test the model. Below is a figure that shows 4 fold cross validation. Green boxes represent the training set and red boxes represent the testing set across 4 different runs.
+
+![](figures/KFold.png)
+
+The idea is to run validation K times on the data and then evaluate the mean model performance for these K times. So if you are optimizing for accuracy, you will have 10 accuracy scores, one from each run. You take the mean and compare against other models. (As a side note, you can also repeate 10 Fold Cross Validation to get repeated 10 fold cross validation. Look up repated cross validation if you want to learn more.)
+
+So that is the overview of K Fold Cross Validation. We can now move on to the idea of model tuning. In the preceeding modules, we have seen that model parameters (depth of the tree, number of layers in a neural net, number of factors in factor analysis...) determine model performance. We can use the validation results to help us tune our model.
+
+Obviously you can do all this manually in R, by writing your own functions, or by repeating analysis with minor tweaks. Luckily there is a much better way. Namely the train function in Caret package.
+
+### Model Tuning in Caret Package
+
+For this example we will use the decision trees discussed in previous modules. This does not mean you can not use the functionality demonstrated here with other models. Caret package supports over 300 models (and counting). So refer to package documentation for further details. By this point you should be quite adept at learning about R.
+
+The data is the same dataset we used in Decision Trees learning activity in Module 4. 
+
+```{r}
+vehicles <- read.csv("data/vehiclesSub.csv")
+```
+
+If you recall the example, we were trying to predict vehicle class on that dataset with a decision tree.
+
+```{r}
+# Below is the rpart function call we made in the original exercise
+# vehicles_dt_0 <- rpart(VClass ~ year + comb08 + displ, data = vehicles, method = "class")
+```
+
+Here we want to automate model tuning with 10 fold cross validation. We will use train function of caret package.
+
+```{r}
+# Let us define training parameters with trainControl function.
+# We do this as it is more concise than just calling the function 
+# each time with all these parameters.
+trainParameters <- trainControl(method = "cv", number = 10, savePredictions = "final")
+```
+
+Here is what we did:
+
+1. trainParameters <-: assigns the control parameters for train function to this variable.
+2. trainControl(method="cv", number=10, savePredictions = TRUE): calls the function with three parameters.
+    method = "cv": resampling method declared as cross validation. Refer to manual for others.
+    number = 10: number of folds.
+    savePredictions = "final": To save the predictions of optimized model only. ("all" and "none" are also valid) 
+    
+Here is a simple exercise for you. Read the manual page for trainControl and try to figure out how to conduct a repeated 10 fold cross validation.
+    
+Now let us ask train function to tune our decision tree.
+
+```{r}
+vehicle_dt_T <- train(VClass ~ year + comb08 + displ + cylinders + drive,
+                      method = "rpart",
+                      trControl = trainParameters,
+                      data = vehicles,
+                      na.action = na.omit
+                      )
+```
+
+
+You should already be familiar with model specification, data, and na.action... The only novel part in this function call is the method part. That is where you tell train function if this is a neural network, or a decision tree...
+
+```{r}
+# Let us see what it did
+vehicle_dt_T
+```
+
+As you can see, the train function ran 10 fold cross validationa and determined optimal complexity parameter for this model. Then it proceeded to make predictions on the optimal model. If you recall the trouble we went throught to manually determine and choose the right decision tree, you will appreciate the value of automated model tuning.
+
+If you want to access the predictions of the optimal model, use the predict function:
+
+```{r}
+# Output is lengthy I limit the output to first 10.
+predict(vehicle_dt_T)[1:10]
+```
+
+And to visually observe the tree:
+
+```{r}
+rpart.plot(vehicle_dt_T$finalModel)
+```
+
+I would like to note once more that the procedure outlined above is not only limited to decision trees. You can carry out this training, tuning procedure for hundreds of different models. While each would be slightly different, I believe the example outlined above would be a great starting point.
+
+# Exercises
+
+1. Here is a simple exercise for you. Read the manual page for trainControl and try to figure out how to conduct a repeated 10 fold cross validation.
+
+```{r}
+# each time with all these parameters.
+trainParameters <- trainControl(method = "repeatedcv" , number = 10, repeats = 10, savePredictions = "final")
+vehicle_dt_T <- vehicle_dt_T <- train(VClass ~ year + comb08 + displ + cylinders + drive,
+                      method = "rpart",
+                      trControl = trainParameters,
+                      data = vehicles,
+                      na.action = na.omit
+                      )
+vehicle_dt_T
+```

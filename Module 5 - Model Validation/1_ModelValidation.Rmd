@@ -12,7 +12,7 @@ library(neuralnet)
 set.seed(128) # Random selections will make replicability problematic if seed is not set.
 ```
 
-So far we have fitted various models and evaluated their performance using a number of metrics such as RMSE, AIC, BIC, Sensitivity... So far, we fit the model and evaluated its performance on the same dataset. This is perfectly acceptable if you have no intention to use the model for predictions on out sample data. This is the approach used in most scientific studies. For practical purposes however, the prediction out of sample is often the sole purpose of fiting the model in the first place.
+We have fitted various models and evaluated their performance using a number of metrics such as RMSE, AIC, BIC, Sensitivity... So far, we fit the model and evaluate its performance on the same dataset. This is perfectly acceptable if you have no intention to use the model for predictions on out sample data. This is the approach used in most scientific studies. For practical purposes however, the prediction out of sample is often the sole purpose of fiting the model in the first place.
 
 The main problem with fitting and evaluating the model performance on a single dataset is that you have no way of knowing the performance of the model in new data. This is a real concern considering the overfitting problem. With any modeling approach we learned thus far, there is the risk of overfitting. An overfitted model may adopt to the idiosyncracies of the sample dataset so well that it may not perform well for out sample data. Using only metrics from one dataset, we may not be able to detect overfitted models.
 
@@ -125,6 +125,9 @@ Here is a simple exercise for you. Compare the output of *confusionMatrix()* abo
 
 What you want to do at this stage is to try to configure your neural network to increase accuracy. You can change number of hidden neurons and layers. You can change variables that go into the model. If you suspect over fitting, you may adjust threshold parameter so the fit would not be as precise...
 
+## Some Notes on Splitting Data
+
+What we have done here is a basic demonstration of how to split the data. Depending on how your data is structured (panel data, repeated observations, clustering variables) you may need to design a spliting scheme that is more complex than what is discussed here. I believe the example here provides a good starting point for further learning. If you want to learn more, I recommend reading caret package documentation.
 
 
 ## Solutions to Exercises
