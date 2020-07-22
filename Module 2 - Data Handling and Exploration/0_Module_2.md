@@ -17,7 +17,7 @@ This module we will build upon some functionality we learned in Module 1 (import
 
 There will be certain things you won't know from the start. Unless they prevent you from progressing, note them down and keep progressing. Most of it will become clear as you work through it. For the questions that you still are unclear about in the end, you can ask me during our virtual office hours.
 
-This module is made up of X learning activities listed below. **BEFORE YOU START THE FOLLOWING ACTIVITIES, CREATE A PROJECT FOLDER FOR THIS MODULE AS DESCRIBED IN PEVIOUS MODULE'S INTRODUCTION LEARNING ACTIVITY**.
+This module is made up of X learning activities listed below. **BEFORE YOU START THE FOLLOWING ACTIVITIES, CREATE A PROJECT FOLDER FOR THIS MODULE AS DESCRIBED IN PREVIOUS MODULE'S INTRODUCTION LEARNING ACTIVITY**.
 
 ##Learning Activities
 
